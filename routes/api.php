@@ -16,3 +16,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::group(['prefix' => 'doctor'], function () {
+
+    Route::post('/register', 'DoctorsControllers\Auth\RegisterController@register');
+    
+   // Route::post('/login', 'AdminControllers\Auth\LoginController@login');
+    
+});
+
