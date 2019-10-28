@@ -22,7 +22,14 @@ Route::group(['prefix' => 'doctor'], function () {
 
     Route::post('/register', 'DoctorsControllers\Auth\RegisterController@register');
     
-   // Route::post('/login', 'AdminControllers\Auth\LoginController@login');
+    
+});
+
+
+Route::group(['prefix' => 'admin'], function () {
+
+    Route::post('/register', 'AdminsControllers\Auth\RegisterController@register');
+    
     
 });
 
