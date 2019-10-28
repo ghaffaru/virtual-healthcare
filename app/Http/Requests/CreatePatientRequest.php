@@ -26,7 +26,8 @@ class CreatePatientRequest extends FormRequest
         return [
             
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users',
+            'password' => 'required',
             'region' => 'required',
             'residence' => 'required',
             'phone' => 'required',
