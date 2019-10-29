@@ -41,6 +41,16 @@ return [
             'provider' => 'users',
         ],
 
+        'admin' => [
+            'driver' => 'passport',
+            'provider' => 'admins',
+        ],
+
+        'doctor' => [
+            'driver' => 'passport',
+            'provider' => 'doctors',
+        ],
+
         'api' => [
             'driver' => 'passport',
             'provider' => 'users',
@@ -69,6 +79,16 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'doctors' => [
+            'driver' => 'eloquent',
+            'model' => App\Doctor::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
         ],
 
         // 'users' => [
