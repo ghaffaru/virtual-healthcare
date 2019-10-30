@@ -76,7 +76,7 @@ return [
             // 'username' => env('DB_USERNAME', 'forge'),
             'username' => $DATABASE_URL['user'],
             // 'password' => env('DB_PASSWORD', ''),
-            'password' => $DATABASE_URL['password'],
+            'password' => $DATABASE_URL['pass'],
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
