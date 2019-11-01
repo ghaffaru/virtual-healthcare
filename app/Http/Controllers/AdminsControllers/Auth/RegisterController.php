@@ -30,6 +30,6 @@ class RegisterController extends Controller
         return response([
 
             'admin' => $admin,
-        ]);
+        ], 200);
     }
 }

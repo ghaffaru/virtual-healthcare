@@ -35,6 +35,6 @@ class RegisterController extends Controller
             'doctor' => $doctor,
 
            // 'access_token' => $doctors_token,
-        ]);
+        ], 200);
     }
 }
