@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Doctor;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,5 +30,12 @@ class DoctorsTest extends TestCase
             'date_of_birth' => '15-11-1996',
         ]);
       */
+    }
+
+    public function test_the_api_can_list_all_doctors()
+    {
+      $response = $this->getJson('/api/doctors');
+
+      $response->assertJson(Doctor::all());
     }
 }
