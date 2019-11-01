@@ -27,7 +27,7 @@ class DoctorsRegistrationFormRequest extends FormRequest
             
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:doctors'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
             'phone' => ['string', 'min:10', 'unique:doctors'],
         ];
     }
