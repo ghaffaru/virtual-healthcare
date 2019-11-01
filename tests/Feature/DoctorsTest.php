@@ -12,24 +12,37 @@ class DoctorsTest extends TestCase
     use RefreshDatabase;
 
     /*
-     * @test
+     * 
      */
-    public function doctor_api_registration()
+    public function test_api_to_register_a_doctor()
     {
 
-      /*   $this->postJson('api/doctor/register',[
+       $response = $this->json('POST','/api/doctor/register', [
             
             'name' => 'emmanuel wilson',
 
             'email' => 'hagios@yahoo.com',
 
+            'password' => 'mypassword',
+
+      
             'phone' => '0273298953',
             
-            'residence' => 'caprice',
-
-            'date_of_birth' => '15-11-1996',
         ]);
-      */
+
+        $response->assertStatus(200);
+
+
+        $this->assertDatabaseHas('doctors', [
+
+          'name' => 'emmanuel wilson',
+
+          'email' => 'hagios@yahoo.com',
+
+          'phone' => '0273298953',
+
+        ]);
+      
     }
 
     public function test_the_api_can_list_all_doctors()
