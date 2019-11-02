@@ -28,6 +28,7 @@ class RegisterController extends Controller
             'specialization_id' => $request->specialization,
             'department_id' => $request->department,
             'phone' => $request->phone
+
         ]);
 
         //$doctors_token = $doctor->createToken('My Admin Token')->accessToken;

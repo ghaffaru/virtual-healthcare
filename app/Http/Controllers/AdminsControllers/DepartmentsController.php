@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminsControllers;
 use App\Department;
 use Illuminate\Http\Request;
 use App\Http\Requests\DepartmentFormRequest;
+use App\Http\Resources\DepartmentResource;
 use App\Http\Controllers\Controller;
 
 class DepartmentsController extends Controller
@@ -16,7 +17,9 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-        //
+        $department = Department::all();
+
+        return DepartmentResource::collection($department);
     }
 
     /**
@@ -38,10 +41,12 @@ class DepartmentsController extends Controller
     public function store(DepartmentFormRequest $request)
     {
         $this->authorize('manage');
-        
+
+        //abort_if(!auth('api'), 403);
+
         Department::create($request->all());
 
-        return response(['success' => 'deaprtment added'], 200);
+        return response(['success' => 'department added'], 200);
     }
 
     /**
@@ -52,7 +57,8 @@ class DepartmentsController extends Controller
      */
     public function show(Department $department)
     {
-        //
+
+        return new DepartmentResource($department);
     }
 
     /**
@@ -77,7 +83,7 @@ class DepartmentsController extends Controller
     {
         $department->update($request->all());
 
-        return ['updated' => $department];
+        return response(['updated' => $department], 200);
     }
 
     /**

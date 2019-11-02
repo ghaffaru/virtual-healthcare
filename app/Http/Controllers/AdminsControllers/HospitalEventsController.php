@@ -4,12 +4,18 @@ namespace App\Http\Controllers\AdminsControllers;
 
 use Illuminate\Http\Request;
 use App\HospitalEvent;
+use App\Admin;
 use App\Http\Requests\HospitalEventRequest;
 use App\Http\Resources\HospitalEventResource;
 use App\Http\Controllers\Controller;
 
 class HospitalEventsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['multiauth:admin,api']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +46,13 @@ class HospitalEventsController extends Controller
      */
     public function store(HospitalEventRequest $request)
     {
+        //$this->authorize('manage');
+
+       \abort_if(auth()->guard('admin') == Admin::first(), 403);
+
         HospitalEvent::create($request->all());
+
+        return ['admin'=> auth()->guard('admin')];
 
         return response()->json(["success" => 'event created'], 200);
 

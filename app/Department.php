@@ -8,5 +8,8 @@ class Department extends Model
 {
     protected $guarded = ['id'];
 
-    
+    public function staff()
+    {
+        return $this->hasMany('App\Staff');
+    }
 }
