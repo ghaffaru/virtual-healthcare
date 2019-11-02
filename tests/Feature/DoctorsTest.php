@@ -10,10 +10,10 @@ class DoctorsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /*
-     * 
+    /**
+     * @test
      */
-    public function test_api_to_register_a_doctor()
+    public function can_register_a_doctor()
     {
 
        $response = $this->json('POST','/api/doctor/register', [
