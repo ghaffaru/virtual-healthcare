@@ -38,6 +38,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/register', 'AdminsControllers\Auth\RegisterController@register');
     
     Route::apiResource('event', 'AdminsControllers\HospitalEventsController');
+
+    Route::apiResource('department', 'AdminsControllers\DepartmentsController');
     
 });
 

@@ -24,8 +24,11 @@ class DoctorsTest extends TestCase
 
             'password' => 'mypassword',
 
+            'specialization' => '1',
+
+            'department' => '2',
       
-            'phone' => '0273298953',
+            'phone' => '0273298953'
             
         ]);
 
@@ -39,6 +42,10 @@ class DoctorsTest extends TestCase
           'email' => 'hagios@yahoo.com',
 
           'phone' => '0273298953',
+
+          'specialization_id' => '1',
+
+          'department_id' => '2',
 
         ]);
       

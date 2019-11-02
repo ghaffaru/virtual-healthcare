@@ -25,7 +25,9 @@ class RegisterController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'phone' => $request->phone,
+            'specialization_id' => $request->specialization,
+            'department_id' => $request->department,
+            'phone' => $request->phone
         ]);
 
         //$doctors_token = $doctor->createToken('My Admin Token')->accessToken;

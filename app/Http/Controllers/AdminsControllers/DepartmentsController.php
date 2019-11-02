@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\AdminsControllers;
 
+use App\Department;
 use Illuminate\Http\Request;
-use App\HospitalEvent;
-use App\Http\Requests\HospitalEventRequest;
-use App\Http\Resources\HospitalEventResource;
+use App\Http\Requests\DepartmentFormRequest;
 use App\Http\Controllers\Controller;
 
-class HospitalEventsController extends Controller
+class DepartmentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +16,7 @@ class HospitalEventsController extends Controller
      */
     public function index()
     {
-        $event = HospitalEvent::all();
-
-        return HospitalEventResource::collection($event);
+        //
     }
 
     /**
@@ -38,32 +35,33 @@ class HospitalEventsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(HospitalEventRequest $request)
+    public function store(DepartmentFormRequest $request)
     {
-        HospitalEvent::create($request->all());
+        $this->authorize('manage');
+        
+        Department::create($request->all());
 
-        return response()->json(["success" => 'event created'], 200);
-
+        return response(['success' => 'deaprtment added'], 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function show(HospitalEvent $event)
+    public function show(Department $department)
     {
-        return new HospitalEventResource($event);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Department $department)
     {
         //
     }
@@ -72,28 +70,26 @@ class HospitalEventsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(HospitalEventRequest $request, HospitalEvent $event)
+    public function update(DepartmentFormRequest $request, Department $department)
     {
-        $event->update($request->all());
+        $department->update($request->all());
 
-        return response()->json(["success" => 'event modified'], 200);
-
+        return ['updated' => $department];
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HospitalEvent $event)
+    public function destroy(Department $department)
     {
-        $event->delete();
+        $department->delete();
 
-        return response()->json(["success" => 'event deleted'], 200);
-
+        return response()->json(['success' => 'department deleted']);
     }
 }
