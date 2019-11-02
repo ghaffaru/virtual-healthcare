@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Doctor;
 use App\Http\Requests\CreatePatientRequest;
+use App\Http\Resources\Doctor as DoctorResource;
 use Illuminate\Http\Request;
 use App\User;
 use Hash;
@@ -26,5 +28,10 @@ class PatientsController extends Controller
         return response()->json([
             'success' => True,
         ]);
+    }
+
+    public function list_all_doctors() 
+    {
+        return DoctorResource::collection(Doctor::all());
     }
 }

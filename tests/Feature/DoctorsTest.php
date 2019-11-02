@@ -30,4 +30,15 @@ class DoctorsTest extends TestCase
         ]);
       */
     }
+
+    public function test_api_can_list_all_doctors()
+    {
+      $this->getJson('api/doctors',[
+        'accept' => 'application/json',
+        'content-type' => 'application/json'
+      ]);
+
+      
+    }
 }
+

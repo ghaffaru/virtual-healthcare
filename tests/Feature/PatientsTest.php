@@ -26,6 +26,7 @@ class PatientsTest extends TestCase
         $this->postJson('api/patient/register',[
             'name' => 'ghaff',
             'email' => 'mudashiruagm@gmail.com',
+            'password' => '12345678',
             'phone' => '0241992669',
             'region' => 'accra',
             'residence' => 'caprice',
@@ -41,4 +42,6 @@ class PatientsTest extends TestCase
             'date_of_birth' => date('15-11-1996'),
         ]);
     }
+
+
 }
