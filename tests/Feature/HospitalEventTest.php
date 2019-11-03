@@ -8,15 +8,34 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class HospitalEventTest extends TestCase
 {
+    use RefreshDatabase;
     /**
-     * A basic feature test example.
-     *
-     * @return void
+     * @test
      */
-    public function testExample()
+    public function admin_can_add_an_event()
     {
-        $response = $this->get('/');
+        $response = $this->json('POST', '/api/admin/event', [
+
+            'event' => 'Test Program',
+
+            'description' => 'Another',
+
+            'start_date' => '2012-10-20',
+
+            'end_date' => '2012-10-20'
+        ]);
 
         $response->assertStatus(200);
+
+        $this->assertDatabaseHas('hospital_events', [
+
+            'event' => 'Test Program',
+
+            'description' => 'Another',
+
+            'start_date' => '2012-10-20',
+
+            'end_date' => '2012-10-20'
+        ]);
     }
 }

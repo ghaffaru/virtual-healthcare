@@ -27,7 +27,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'doctor'], function () {
 
-    Route::post('/registeradoctor', 'DoctorsControllers\Auth\RegisterController@register');
+   
     
     
 });
@@ -36,6 +36,8 @@ Route::group(['prefix' => 'doctor'], function () {
 Route::group(['prefix' => 'admin'], function () {
 
     Route::post('/register', 'AdminsControllers\Auth\RegisterController@register');
+
+    Route::post('/registeradoctor', 'DoctorsControllers\Auth\RegisterController@register');
     
     Route::apiResource('event', 'AdminsControllers\HospitalEventsController');
 

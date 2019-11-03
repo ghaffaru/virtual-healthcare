@@ -16,7 +16,7 @@ class DoctorsTest extends TestCase
     public function can_register_a_doctor()
     {
 
-       $response = $this->json('POST','/api/doctor/register', [
+       $response = $this->json('POST','/api/admin/registeradoctor', [
             
             'name' => 'emmanuel wilson',
 

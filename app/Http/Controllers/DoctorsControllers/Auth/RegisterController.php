@@ -6,11 +6,15 @@ use App\Doctor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Jobs\SendDoctorRegistrationAlert;
 use App\Http\Requests\DoctorsRegistrationFormRequest;
 
 class RegisterController extends Controller
 {
-    
+    public function __construct()
+    {
+        $this->middleware('multiauth:admin');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -30,6 +34,10 @@ class RegisterController extends Controller
             'phone' => $request->phone
 
         ]);
+
+        # dicpatch job to send doctor a mail on registration
+
+        SendDoctorRegistrationAlert::dispatch($doctor);
 
         //$doctors_token = $doctor->createToken('My Admin Token')->accessToken;
 

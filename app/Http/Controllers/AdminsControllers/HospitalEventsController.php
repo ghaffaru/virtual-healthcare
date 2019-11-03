@@ -13,7 +13,7 @@ class HospitalEventsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['multiauth:admin,api']);
+        $this->middleware(['multiauth:admin, api']);
     }
 
     /**
@@ -48,13 +48,11 @@ class HospitalEventsController extends Controller
     {
         //$this->authorize('manage');
 
-       \abort_if(auth()->guard('admin') == Admin::first(), 403);
-
         HospitalEvent::create($request->all());
 
-        return ['admin'=> auth()->guard('admin')];
+      
 
-        return response()->json(["success" => 'event created'], 200);
+        return response(["success" => 'event created'], 200);
 
     }
 
@@ -66,6 +64,8 @@ class HospitalEventsController extends Controller
      */
     public function show(HospitalEvent $event)
     {
+       //$this->authorize('manage');
+
         return new HospitalEventResource($event);
     }
 
