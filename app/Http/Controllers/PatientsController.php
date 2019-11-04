@@ -58,14 +58,23 @@ class PatientsController extends Controller
 
     public function appointments()
     {
-        return AppointmentResource::collection(
-                        Appointment::where( 
-                            [
-                                'user_id' => auth()->guard('api')->user()->id,
-                                'approved' => true
-                            ]
-                        )->get()
-                );
+        $appointments = Appointment::where( 
+            [
+                'user_id' => auth()->guard('api')->user()->id,
+                'approved' => true
+            ]
+        )->get();
+
+        if (count($appointments) > 0) {
+            AppointmentResource::collection(
+               $appointments
+             );
+        } else {
+            return response()->json([
+                'message' => 'No appointments'
+            ]);
+        }
+       
            
     }
 }
