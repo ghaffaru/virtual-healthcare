@@ -17,6 +17,9 @@ class DoctorsTest extends TestCase
     public function test_api_to_register_a_doctor()
     {
 
+      /*
+         $this->postJson('api/doctor/register',[
+
        $response = $this->json('POST','/api/doctor/register', [
             
             'name' => 'emmanuel wilson',
@@ -42,13 +45,26 @@ class DoctorsTest extends TestCase
           'phone' => '0273298953',
 
         ]);
-      
+*/      
     }
 
-    public function test_the_api_can_list_all_doctors()
+    public function test_api_can_list_all_doctors()
     {
-      $response = $this->getJson('/api/doctors');
+      $response = $this->getJson('api/doctors',[
+        'accept' => 'application/json',
+        'content-type' => 'application/json'
+      ]);
 
-      $response->assertJson(Doctor::all());
+      $response->assertJsonStructure([
+        'data' => [
+          '*' => [
+          'name',
+          'email',
+          'phone'
+          ],
+        ]
+      ]);
+
     }
 }
+
