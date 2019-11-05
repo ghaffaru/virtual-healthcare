@@ -1,5 +1,5 @@
 <?php
-
+$DATABASE_URL=parse_url('postgres://mvhbasgwmvshkn:1db80da0d4f4df2b152b30e438350b84e39c59c17d791099bf378d98f7ad9adb@ec2-184-73-169-163.compute-1.amazonaws.com:5432/dclpgmt7mk9tuq');
 use Illuminate\Support\Str;
 
 return [
@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,12 +65,18 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            // 'url' => env('DATABASE_URL'),
+
+            // 'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => $DATABASE_URL["host"],
+            // 'port' => env('DB_PORT', '5432'),
+            'port' => $DATABASE_URL["port"],
+            // 'database' => env('DB_DATABASE', 'forge'),
+            'database' => ltrim($DATABASE_URL["path"],"/"),
+            // 'username' => env('DB_USERNAME', 'forge'),
+            'username' => $DATABASE_URL['user'],
+            // 'password' => env('DB_PASSWORD', ''),
+            'password' => $DATABASE_URL['pass'],
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
