@@ -23,13 +23,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+Route::post('/patient/register','PatientsController@store');
+Route::get('/doctors','PatientsController@list_all_doctors');
+Route::post('/book-appointment','PatientsController@book_appointment');
+Route::get('/patient/appointments','PatientsController@appointments');
 
 Route::group(['prefix' => 'doctor'], function () {
 
     Route::post('/register', 'DoctorsControllers\Auth\RegisterController@register');
-    
-    
+      
 });
 
 
@@ -38,8 +40,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/register', 'AdminsControllers\Auth\RegisterController@register');
     
     
-});
+}); 
 
 
-Route::post('/patient/register','PatientsController@store');
 
