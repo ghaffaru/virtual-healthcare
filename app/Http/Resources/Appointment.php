@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Doctor;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class Appointment extends JsonResource
 {
@@ -18,9 +19,11 @@ class Appointment extends JsonResource
     {
         $doctor = Doctor::findOrFail($this->doctor_id);
         return [
+            'id' => $this->id,
             'doctor' => $doctor->name,
             'doctor_phone' => $doctor->phone,
-            'appointment_date' => $this->appointment_date
+            'appointment_date' => ($this->appointment_date) ,
+            'approved' => $this->approved
         ];
     }
 }

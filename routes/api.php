@@ -30,13 +30,14 @@ Route::post('/patient/register','PatientsController@store');
 Route::get('/doctors','PatientsController@list_all_doctors');
 Route::post('/book-appointment','PatientsController@book_appointment');
 Route::get('/patient/appointments','PatientsController@appointments');
+Route::delete('/patient/cancel-appointment/{appointment}','PatientsController@cancel_appointment');
+Route::post('/patient/request-ambulance','PatientsController@request_ambulance');
 
 
 Route::group(['prefix' => 'doctor'], function () {
 
     Route::post('/register', 'DoctorsControllers\Auth\RegisterController@register');
 });
-
 
 Route::group(['prefix' => 'admin'], function () {
 
