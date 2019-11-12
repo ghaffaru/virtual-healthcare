@@ -15,7 +15,8 @@ class CreatePrescriptionsTable extends Migration
     {
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('prescription_id');
+            //$table->foreign('user_id')->references('id')->on('user');
+            //$table->Increments('prescription_id');
             $table->integer('user_id');
             $table->integer('doctor_id');
             $table->string('case_history');
