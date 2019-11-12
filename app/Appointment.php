@@ -12,5 +12,10 @@ class Appointment extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function doctor()
+    {
+        return $this->belongsTo('App\Doctor');
+    }
+
     protected $fillable = ['user_id','doctor_id','appointment_date'];
 }
