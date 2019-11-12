@@ -41,13 +41,15 @@ class DoctorsController extends Controller
     //Make prescription
     public function make_prescription(Request $request){
         $prescrition = Prescription::create([
-            '' => $request->name,
-            'email' => $request->email,
-            'region' => $request->region,
-            'residence' => $request->residence,
-            'phone' => $request->phone,
-            'date_of_birth' => $request->date_of_birth,
-            'password' => Hash::make($request->password),
+            'user_id' => $request->user_id,
+            'doctor_id' => $request->doctor_id,
+            'case_history' => $request->case_history,
+            'medication' => $request->medication,
+            'medication_from_pharmacist' => $request->medication_from_pharmacist,
+        ]);
+
+        return respone()->json([
+            success => true,
         ]);
     }
 }

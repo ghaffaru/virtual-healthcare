@@ -16,8 +16,8 @@ class DoctorsTest extends TestCase
     public function test_api_to_register_a_doctor()
     {
 
-      /*
-         $this->postJson('api/doctor/register',[
+      
+         //$this->postJson('api/doctor/register',[
 
        $response = $this->json('POST','/api/doctor/register', [
             

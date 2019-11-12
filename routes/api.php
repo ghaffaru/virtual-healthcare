@@ -31,7 +31,10 @@ Route::get('/patient/appointments','PatientsController@appointments');
 Route::group(['prefix' => 'doctor'], function () {
 
     Route::post('/register', 'DoctorsControllers\Auth\RegisterController@register');
-    Route::get('/appointment', 'DoctorsController@list_appointment');
+    Route::get('/appointment/list', 'DoctorsController@list_appointment');
+    Route::post('/appointment/approve', 'DoctorsController@approve_appointment');
+    Route::post('/prescription/make', 'DoctorsController@make_prescription');
+
       
 });
 
