@@ -62,6 +62,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'oauth.providers' => \SMartins\PassportMultiauth\Http\Middleware\AddCustomProvider::class,
         'multiauth' => \SMartins\PassportMultiauth\Http\Middleware\MultiAuthenticate::class,
+        'cors' => \App\Http\Middleware\Cors::class,
     ];
 
     /**
