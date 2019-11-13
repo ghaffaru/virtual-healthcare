@@ -26,7 +26,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/patient/register','PatientsController@store');
+Route::post('/patient/register','PatientsController@store')->middleware('cors');
 Route::get('/doctors','PatientsController@list_all_doctors');
 Route::post('/book-appointment','PatientsController@book_appointment');
 Route::get('/patient/appointments','PatientsController@appointments');
