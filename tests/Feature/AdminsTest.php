@@ -11,9 +11,10 @@ class AdminsTest extends TestCase
     use RefreshDatabase;
 
 
-    /*
+    /**
+     * @test
      */
-    public function test_the_api_to_register_admin()
+    public function can_to_register_admin()
     {
         $response = $this->json('POST', '/api/admin/register', [
 

@@ -10,26 +10,27 @@ class DoctorsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /*
-     * 
+    /**
+     * @test
      */
-    public function test_api_to_register_a_doctor()
+    public function can_register_a_doctor()
     {
 
-      /*
-         $this->postJson('api/doctor/register',[
 
-       $response = $this->json('POST','/api/doctor/register', [
-            
+       $response = $this->json('POST','/api/admin/registeradoctor', [
+ 
             'name' => 'emmanuel wilson',
 
             'email' => 'hagios@yahoo.com',
 
             'password' => 'mypassword',
 
+            'specialization' => '1',
+
+            'department' => '2',
       
-            'phone' => '0273298953',
-            
+            'phone' => '0273298953'
+          
         ]);
 
         $response->assertStatus(200);
@@ -42,6 +43,10 @@ class DoctorsTest extends TestCase
           'email' => 'hagios@yahoo.com',
 
           'phone' => '0273298953',
+
+          'specialization_id' => '1',
+
+          'department_id' => '2',
 
         ]);
       
