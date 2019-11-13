@@ -18,8 +18,6 @@ Route::fallback(function () {
     ],404);
 })->name('api.fallback.404');
 
-//Patient Routes
-Route::post('/patient/register','PatientsController@store');
 
 Route::middleware(['auth:api','cors'])->get('/user', function (Request $request) {
     return $request->user();

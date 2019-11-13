@@ -13,7 +13,7 @@ class RegisterController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['multiauth:admin,doctor','api']);
+        // $this->middleware(['multiauth:admin,doctor','api']);
     }
 
     /**
@@ -35,18 +35,20 @@ class RegisterController extends Controller
 
         ]);
 
-        # dicpatch job to send doctor a mail on registration
+        # dispatch job to send doctor a mail on registration
 
-        SendDoctorRegistrationAlert::dispatch($doctor);
+        if (SendDoctorRegistrationAlert::dispatch($doctor)) {
+            return response([
+
+                'doctor' => $doctor,
+    
+               // 'access_token' => $doctors_token,
+            ], 200);
+        }
 
         //$doctors_token = $doctor->createToken('My Admin Token')->accessToken;
 
-        return response([
-
-            'doctor' => $doctor,
-
-           // 'access_token' => $doctors_token,
-        ], 200);
+       
     }
 
     public function resetDefaultPassword(Doctor $doctor, Request $request)
