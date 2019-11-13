@@ -36,12 +36,27 @@ Route::post('/patient/request-ambulance','PatientsController@request_ambulance')
 
 Route::group(['prefix' => 'doctor'], function () {
 
-    Route::post('/register', 'DoctorsControllers\Auth\RegisterController@register');
+    Route::post('/{doctor}/reset-password', 'DoctorsControllers\Auth\RegisterController@resetDefaultPassword');
+
 });
 
 Route::group(['prefix' => 'admin'], function () {
 
-    Route::post('/register', 'AdminsControllers\Auth\RegisterController@register');    
+    Route::get('/department/{department}/staff-list', 'AdminsControllers\DepartmentsController@staffList');
+
+    Route::post('/register', 'AdminsControllers\Auth\RegisterController@register');
+
+    Route::post('/registeradoctor', 'DoctorsControllers\Auth\RegisterController@register');
+    
+    Route::apiResource('event', 'AdminsControllers\HospitalEventsController');
+
+    Route::apiResource('department', 'AdminsControllers\DepartmentsController');
+
+    Route::post('/register/staff', 'AdminsControllers\StaffsController@store');
+
+    Route::get('/staff/list', 'AdminsControllers\StaffsController@index');
+
+    Route::patch('/department/{department}/assign-head', 'AdminsControllers\DepartmentsController@assignHead');
     
 }); 
 
