@@ -39,6 +39,8 @@ class PatientsController extends Controller
         
         return response()->json([
             'success' => True,
+        ],200,[
+            'Access-Control-Allow-Origin', '*'
         ]);
     }
 
