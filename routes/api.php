@@ -50,6 +50,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/register/staff', 'AdminsControllers\StaffsController@store');
 
     Route::get('/staff/list', 'AdminsControllers\StaffsController@index');
+
+    Route::patch('/department/{department}/assign-head', 'AdminsControllers\DepartmentsController@assignHead');
     
 }); 
 

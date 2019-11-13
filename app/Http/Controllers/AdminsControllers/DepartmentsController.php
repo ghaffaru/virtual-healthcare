@@ -74,9 +74,11 @@ class DepartmentsController extends Controller
      * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function edit(Department $department)
+    public function assignHead(Department $department, Request $request)
     {
-        //
+        $department->head_of_department = $request->staff_id;
+
+        return response(['success' => 'Department head added'], 200);
     }
 
     /**
