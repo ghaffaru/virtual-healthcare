@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDepartmentsTable extends Migration
+class CreateStaffTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateDepartmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('staff_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('department')->unique();
-            $table->integer('head_of_department')->unsigned()->nullable(); #id of a staff(head) belonging to that department
+            $table->string('staff_type')->unique();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateDepartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('staff_types');
     }
 }

@@ -10,6 +10,13 @@ use App\Http\Controllers\Controller;
 
 class DepartmentsController extends Controller
 {
+
+    public function __construct()
+    {
+        //$this->middleware('multiauth:admins, api');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +47,7 @@ class DepartmentsController extends Controller
      */
     public function store(DepartmentFormRequest $request)
     {
-        $this->authorize('manage');
+       // $this->authorize('manage');
 
         //abort_if(!auth('api'), 403);
 
@@ -86,6 +93,13 @@ class DepartmentsController extends Controller
         return response(['updated' => $department], 200);
     }
 
+    public function staffList(Department $department)
+    {
+        $departmentStaffList = $department->staff;
+        
+        return ['departmentStaffList' => $departmentStaffList];
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -96,6 +110,6 @@ class DepartmentsController extends Controller
     {
         $department->delete();
 
-        return response()->json(['success' => 'department deleted']);
+        return response()->json(['success' => 'department deleted'], 200);
     }
 }

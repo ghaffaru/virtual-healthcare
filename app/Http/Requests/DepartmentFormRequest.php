@@ -27,7 +27,7 @@ class DepartmentFormRequest extends FormRequest
             
             'department' => 'required|string',
 
-            'head_of_department' => 'required|integer',
+           /*  'head_of_department' => ['nullable', 'integer'], */
         ];
     }
 }

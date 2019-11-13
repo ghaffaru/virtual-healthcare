@@ -26,7 +26,7 @@ class AdminsRegistrationFormRequest extends FormRequest
         return [
             
             'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
+            'email' => ['required', 'email', 'max:255', 'unique:admins'],
             'password' => ['required', 'string', 'min:8'],
         ];
     }

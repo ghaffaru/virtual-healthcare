@@ -30,12 +30,14 @@ Route::get('/patient/appointments','PatientsController@appointments');
 
 Route::group(['prefix' => 'doctor'], function () {
 
-    Route::post('/register', 'DoctorsControllers\Auth\RegisterController@register');
-      
+    Route::post('/{doctor}/reset-password', 'DoctorsControllers\Auth\RegisterController@resetDefaultPassword');
+
 });
 
 
 Route::group(['prefix' => 'admin'], function () {
+
+    Route::get('/department/{department}/staff-list', 'AdminsControllers\DepartmentsController@staffList');
 
     Route::post('/register', 'AdminsControllers\Auth\RegisterController@register');
 
@@ -44,6 +46,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::apiResource('event', 'AdminsControllers\HospitalEventsController');
 
     Route::apiResource('department', 'AdminsControllers\DepartmentsController');
+
+    Route::post('/register/staff', 'AdminsControllers\StaffsController@store');
+
+    Route::get('/staff/list', 'AdminsControllers\StaffsController@index');
     
 }); 
 

@@ -18,13 +18,7 @@ class DoctorsTest extends TestCase
 
 
        $response = $this->json('POST','/api/admin/registeradoctor', [
-
-      /*
-         $this->postJson('api/doctor/register',[
-
-       $response = $this->json('POST','/api/doctor/register', [
-
-            
+ 
             'name' => 'emmanuel wilson',
 
             'email' => 'hagios@yahoo.com',
@@ -36,7 +30,7 @@ class DoctorsTest extends TestCase
             'department' => '2',
       
             'phone' => '0273298953'
-            
+          
         ]);
 
         $response->assertStatus(200);
