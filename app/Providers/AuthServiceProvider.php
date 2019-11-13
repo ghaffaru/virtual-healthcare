@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::routes();
 
-        Route::group(['middleware' => 'oauth.providers'], function () {
+        Route::group(['middleware' => ['oauth.providers','cors']], function () {
             
             Passport::routes(function ($router) {
                 return $router->forAccessTokens();
