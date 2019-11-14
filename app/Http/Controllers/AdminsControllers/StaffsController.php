@@ -26,7 +26,9 @@ class StaffsController extends Controller
             $employee['staff_type'] = $employee->type->staff_type;
         }
 
-        return StaffResource::collection($employees);
+        return StaffResource::collection($employees)->header([
+            'Access-Control-Allow-Origin', '*'
+        ]);
 
     }
 

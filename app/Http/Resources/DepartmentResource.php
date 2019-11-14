@@ -15,11 +15,9 @@ class DepartmentResource extends JsonResource
     public function toArray($request)
     {
         return [
-
             'id' => $this->id,
             'department' => $this->department,
             'head_of_department' => $this->head_of_department
-
         ];
     }
 }
