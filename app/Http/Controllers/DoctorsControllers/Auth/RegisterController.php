@@ -43,7 +43,9 @@ class RegisterController extends Controller
                 'doctor' => $doctor,
     
                // 'access_token' => $doctors_token,
-            ], 200);
+            ], 200,[
+                'Access-Control-Allow-Origin', '*'
+            ]);
         }
 
         //$doctors_token = $doctor->createToken('My Admin Token')->accessToken;
