@@ -31,7 +31,7 @@ class StaffManagementFormRequest extends FormRequest
 
             'email' => 'required|email|unique:employees',
 
-            'phone' => 'required|string|min:10|max:13',
+            'phone' => 'required|string|min:10|max:13|unique:employees',
 
             'qualification' => 'required|string',
 
