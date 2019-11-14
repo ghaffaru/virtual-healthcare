@@ -19,11 +19,11 @@ Route::fallback(function () {
 })->name('api.fallback.404');
 
 
-Route::middleware(['auth:api','cors'])->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'patient','middleware' => 'cors'], function () {
+Route::group(['prefix' => 'patient'], function () {
 
     Route::post('/register','PatientsController@store');
     Route::post('/book-appointment','PatientsController@book_appointment');
@@ -36,13 +36,13 @@ Route::group(['prefix' => 'patient','middleware' => 'cors'], function () {
 Route::get('/doctors','PatientsController@list_all_doctors');
 
 
-Route::group(['prefix' => 'doctor', 'middleware' => 'cors'], function () {
+Route::group(['prefix' => 'doctor'], function () {
 
     Route::post('/{doctor}/reset-password', 'DoctorsControllers\Auth\RegisterController@resetDefaultPassword');
 
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => 'cors'], function () {
+Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/department/{department}/staff-list', 'AdminsControllers\DepartmentsController@staffList');
 
