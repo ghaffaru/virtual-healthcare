@@ -46,8 +46,7 @@ class HospitalEventsController extends Controller
      */
     public function store(HospitalEventRequest $request)
     {
-        //$this->authorize('manage');
-
+        
         HospitalEvent::create($request->all());
 
       
