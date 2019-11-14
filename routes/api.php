@@ -23,21 +23,26 @@ Route::middleware(['auth:api','cors'])->get('/user', function (Request $request)
     return $request->user();
 });
 
-Route::post('/patient/register','PatientsController@store')->middleware('cors');
+Route::group(['prefix' => 'patient','middleware' => 'cors'], function () {
+
+    Route::post('/register','PatientsController@store');
+    Route::post('/book-appointment','PatientsController@book_appointment');
+    Route::get('/appointments','PatientsController@appointments');
+    Route::delete('/cancel-appointment/{appointment}','PatientsController@cancel_appointment');
+    Route::post('/request-ambulance','PatientsController@request_ambulance');
+   
+});
+
 Route::get('/doctors','PatientsController@list_all_doctors');
-Route::post('/book-appointment','PatientsController@book_appointment');
-Route::get('/patient/appointments','PatientsController@appointments');
-Route::delete('/patient/cancel-appointment/{appointment}','PatientsController@cancel_appointment');
-Route::post('/patient/request-ambulance','PatientsController@request_ambulance');
 
 
-Route::group(['prefix' => 'doctor'], function () {
+Route::group(['prefix' => 'doctor', 'middleware' => 'cors'], function () {
 
     Route::post('/{doctor}/reset-password', 'DoctorsControllers\Auth\RegisterController@resetDefaultPassword');
 
 });
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'cors'], function () {
 
     Route::get('/department/{department}/staff-list', 'AdminsControllers\DepartmentsController@staffList');
 
