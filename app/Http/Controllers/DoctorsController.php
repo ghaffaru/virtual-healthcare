@@ -11,14 +11,12 @@ use App\Http\Requests\MakePrescriptionRequest;
 class DoctorsController extends Controller
 {
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth:doctor')->only(['list_appointment','approve_appointments']);
-
     }
     
-        
-    
-    //List appointment
+    // List appointment
     public function list_appointment(Doctor $doctor){
         
     
