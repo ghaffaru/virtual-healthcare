@@ -6,6 +6,7 @@ use App\Department;
 use Illuminate\Http\Request;
 use App\Http\Requests\DepartmentFormRequest;
 use App\Http\Resources\DepartmentResource;
+use App\Http\Resources\DepartmentStaffListResource;
 use App\Http\Controllers\Controller;
 
 class DepartmentsController extends Controller
@@ -13,7 +14,7 @@ class DepartmentsController extends Controller
 
     public function __construct()
     {
-        //$this->middleware('multiauth:admins, api');
+        $this->middleware('api');
     }
 
 
@@ -76,7 +77,14 @@ class DepartmentsController extends Controller
      */
     public function assignHead(Department $department, Request $request)
     {
+        $request->validate([
+
+            'staff_id' => 'required|integer'
+        ]);
+
         $department->head_of_department = $request->staff_id;
+
+        $department->save();
 
         return response(['success' => 'Department head added'], 200);
     }
@@ -98,8 +106,21 @@ class DepartmentsController extends Controller
     public function staffList(Department $department)
     {
         $departmentStaffList = $department->staff;
+
+        foreach($departmentStaffList as $departmentStaff)
+        {
+            $departmentStaffList['staff_type'] = $departmentStaff->type->staff_type;
+        }
+
+        if($departmentStaffList->count() > 0)
+        {
+            return response()->json(['departmentStaffList' => $departmentStaffList], 200);
         
-        return ['departmentStaffList' => $departmentStaffList];
+        }else{
+
+            return response()->json(['No staff added for this department'], 200);
+        }
+        
     }
 
     /**

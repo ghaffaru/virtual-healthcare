@@ -24,4 +24,13 @@ class Employee extends Model
         return $this->belongsTo('App\Department', 'department_id');
 
     }
+
+    public function staff()
+    {
+        
+        return $this->hasOne('App\Department', 'head_of_department');
+
+    }
+
+
 }

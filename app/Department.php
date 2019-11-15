@@ -13,4 +13,10 @@ class Department extends Model
     {
         return $this->hasMany('App\Employee', 'department_id');
     }
+
+    
+    public function departmentHead()
+    {
+        return $this->belongsTo('App\Employee', 'head_of_department');
+    }
 }

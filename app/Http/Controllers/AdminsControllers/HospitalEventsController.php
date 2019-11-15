@@ -13,7 +13,7 @@ class HospitalEventsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['multiauth:admin, api']);
+        $this->middleware(['api']);
     }
 
     /**
