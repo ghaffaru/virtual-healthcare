@@ -36,5 +36,12 @@ class Employee extends Authenticatable
 
     }
 
+    public function attendanceLogs()
+    {
+        return $this->hasMany('App\StaffAttendance');
+    }
+
+   // public function a
+
 
 }

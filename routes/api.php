@@ -82,5 +82,11 @@ Route::group(['prefix' => 'staff'], function () {
 
     Route::post('/{employee}/reset-password', 'EmployeesControllers\StaffController@resetDefaultPassword');
 
+    Route::get('/{employee}/request-code', 'StaffAttendanceController@requestCode');
+
+    Route::post('/{staffAttendance}/checkin', 'StaffAttendanceController@checkin');
+
+    Route::post('/{staffAttendance}/checkout', 'StaffAttendanceController@checkout');
+
 });
 
