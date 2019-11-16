@@ -2,13 +2,18 @@
 
 namespace App;
 
+//use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use SMartins\PassportMultiauth\HasMultiAuthApiTokens;
+use Illuminate\Notifications\Notifiable;
 
-class Employee extends Model
+class Employee extends Authenticatable
 {
+    use Notifiable, HasMultiAuthApiTokens;
 
     protected $guarded = ['id'];
-    
+
     
     public function type()
     {
@@ -16,7 +21,6 @@ class Employee extends Model
         return $this->belongsTo('App\StaffType', 'staff_type_id');
 
     }
-
 
     public function staffDepartment()
     {

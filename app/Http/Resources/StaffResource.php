@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Employee;
 
 class StaffResource extends JsonResource
 {
@@ -14,15 +15,16 @@ class StaffResource extends JsonResource
      */
     public function toArray($request)
     {
+        $employee = Employee::find($this->id);
         return [
 
             "name" => $this->name,
             "qualification" => $this->qualification,
-            "staff_type" => $this->staff_type,
+            "staff_type" => $employee->type->staff_type,
             "email" => $this->email,
             "gender" => $this->gender,
             "phone" => $this->phone,
-            "department" => $this->department,
+            "department" => $employee->staffDepartment->department,
             "avatar" => $this->avatar
         
         ];

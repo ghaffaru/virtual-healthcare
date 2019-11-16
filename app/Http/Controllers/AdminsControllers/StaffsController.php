@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StaffManagementFormRequest;
 use App\Http\Resources\StaffResource;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+use App\Jobs\StaffRegistrationAlert;
 
 class StaffsController extends Controller
 {
@@ -22,12 +24,11 @@ class StaffsController extends Controller
     {
         $employees = Employee::all();
 
-        foreach($employees as $employee)
+        /* foreach($employees as $employee)
         {
-            $employee['department'] = $employee->staffDepartment->department; 
-            
-            $employee['staff_type'] = $employee->type->staff_type;
-        }
+            $employee['department'] = 
+            $employee['staff_type'] = ;
+        } */
 
         return StaffResource::collection($employees);
         //->header([
@@ -71,6 +72,7 @@ class StaffsController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
+                'password' => Hash::make('vhealth123'),
                 'gender' => $request->gender,
                 'staff_type_id' => $request->staff_type_id,
                 'department_id' => $request->department_id,
@@ -80,8 +82,13 @@ class StaffsController extends Controller
 
         $this->saveStaffAvatar($employee);
 
+        if(StaffRegistrationAlert::dispatch($employee))
+        {
+            return response()->json(['success' => 'Staff added'], 200);
+        }
+
   
-        return response()->json(['success' => 'Staff added'], 200);
+        
 
     }
 
