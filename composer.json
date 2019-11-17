@@ -14,6 +14,7 @@
         "laravel/framework": "5.8.*",
         "laravel/passport": "^7.5",
         "laravel/tinker": "^1.0",
+        "simplesoftwareio/simple-qrcode": "^2.0",
         "smartins/passport-multiauth": "^4.1"
     },
     "require-dev": {

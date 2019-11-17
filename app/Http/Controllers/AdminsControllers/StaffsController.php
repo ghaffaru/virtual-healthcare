@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\AdminsControllers;
 
 use App\Employee;
+use App\StaffType;
+use App\Department;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StaffManagementFormRequest;
 use App\Http\Resources\StaffResource;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+use App\Jobs\StaffRegistrationAlert;
 
 class StaffsController extends Controller
 {
@@ -19,16 +24,16 @@ class StaffsController extends Controller
     {
         $employees = Employee::all();
 
-        foreach($employees as $employee)
+        /* foreach($employees as $employee)
         {
-            $employee['department'] = $employee->staffDepartment->department; 
-            
-            $employee['staff_type'] = $employee->type->staff_type;
-        }
+            $employee['department'] = 
+            $employee['staff_type'] = ;
+        } */
 
-        return StaffResource::collection($employees)->header([
-            'Access-Control-Allow-Origin', '*'
-        ]);
+        return StaffResource::collection($employees);
+        //->header([
+          //  'Access-Control-Allow-Origin', '*'
+        //]);
 
     }
 
@@ -37,9 +42,20 @@ class StaffsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getstaffRegistrationRequirement()
     {
-        //
+        $department = Department::all('id', 'department');
+
+        $staff_type = StaffType::all('id', 'staff_type');
+
+        return response()->json([
+            
+            'departments' => $department,
+            
+            'staff_type' => $staff_type
+            
+        ], 200);
+
     }
 
     /**
@@ -56,34 +72,23 @@ class StaffsController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
+                'password' => Hash::make('vhealth123'),
                 'gender' => $request->gender,
                 'staff_type_id' => $request->staff_type_id,
                 'department_id' => $request->department_id,
                 'qualification' => $request->qualification,
             
             ]);
-    
-        
 
-        if($request->hasFile('avatar'))
+        $this->saveStaffAvatar($employee);
+
+        if(StaffRegistrationAlert::dispatch($employee))
         {
-            $fileNameToStore = $request->file('avatar')->getClientOriginalName(); 
-
-            # image path
-            $path = 'public/images/'. $employee->id;
-
-            $request->file('avatar')->storeAs($path, $fileNameToStore);
-
-            $employee->avatar = '/storage/images/'.$employee->id. '/'. $fileNameToStore;
-
-            $employee->save();
-
+            return response()->json(['success' => 'Staff added'], 200);
         }
 
-     
-
   
-        return response()->json(['success' => 'Staff added'], 200);
+        
 
     }
 
@@ -95,7 +100,11 @@ class StaffsController extends Controller
      */
     public function show(Employee $employee)
     {
-        
+        $employee['staff_type'] = $employee->type->staff_type;
+
+        $employee['department'] = $employee->staffDepartment->department; 
+
+        return new StaffResource($employee);
     }
 
     /**
@@ -116,9 +125,13 @@ class StaffsController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(StaffManagementFormRequest $request, Employee $employee)
     {
-        //
+        $employee->update($request->all());
+
+        $this->saveStaffAvatar($employee);
+
+        return response()->json(['success' => 'staff\'s details modified'], 200);
     }
 
     /**
@@ -129,6 +142,32 @@ class StaffsController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        Storage::deleteDirectory('public/images/'.$employee->id);
+        
+        $employee->delete();
+
+        return response()->json(['success' => $employee->name .' deleted'], 200);
+    }
+
+
+
+    public function saveStaffAvatar(Employee $employee)
+    {
+        
+        if(request()->hasFile('avatar'))
+        {
+            $fileNameToStore = request()->file('avatar')->getClientOriginalName(); 
+
+            # image path
+            $path = 'public/images/'. $employee->id;
+
+            request()->file('avatar')->storeAs($path, $fileNameToStore);
+
+            $employee->avatar = '/storage/images/'.$employee->id. '/'. $fileNameToStore;
+
+            $employee->save();
+
+        }
+
     }
 }

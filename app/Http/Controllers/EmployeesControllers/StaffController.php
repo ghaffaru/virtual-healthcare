@@ -1,21 +1,32 @@
 <?php
 
-namespace App\Http\Controllers\AdminsControllers;
+namespace App\Http\Controllers\EmployeesControllers;
 
+use App\Employee;
 use Illuminate\Http\Request;
-use App\HospitalEvent;
-use App\Admin;
-use App\Http\Requests\HospitalEventRequest;
-use App\Http\Resources\HospitalEventResource;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
-class HospitalEventsController extends Controller
+
+class StaffController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware(['api']);
     }
 
+
+    public function resetDefaultPassword(Employee $employee)
+    { 
+
+        $employee->password = Hash::make(request()->password);
+
+        $employee->save();
+
+        return response()->json(['success' => 'Password has been changed'], 200);
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +34,7 @@ class HospitalEventsController extends Controller
      */
     public function index()
     {
-        $event = HospitalEvent::all();
-
-        return HospitalEventResource::collection($event);
+        //
     }
 
     /**
@@ -38,43 +47,37 @@ class HospitalEventsController extends Controller
         //
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(HospitalEventRequest $request)
+    public function store(Request $request)
     {
-        
-        HospitalEvent::create($request->all());
-
-      
-
-        return response(["success" => 'event created'], 200);
-
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function show(HospitalEvent $event)
+    public function show(Employee $employee)
     {
-       //$this->authorize('manage');
-
-        return new HospitalEventResource($event);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Employee $employee)
     {
         //
     }
@@ -83,28 +86,22 @@ class HospitalEventsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(HospitalEventRequest $request, HospitalEvent $event)
+    public function update(Request $request, Employee $employee)
     {
-        $event->update($request->all());
-
-        return response()->json(["success" => 'event modified'], 200);
-
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HospitalEvent $event)
+    public function destroy(Employee $employee)
     {
-        $event->delete();
-
-        return response()->json(["success" => 'event deleted'], 200);
-
+        //
     }
 }
