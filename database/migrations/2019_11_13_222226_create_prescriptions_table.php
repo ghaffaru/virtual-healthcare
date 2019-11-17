@@ -21,7 +21,10 @@ class CreatePrescriptionsTable extends Migration
             $table->integer('doctor_id');
             $table->string('case_history');
             $table->string('medication');
-            $table->string('medication_from_pharmacist');
+            // $table->string('medication_from_pharmacist');
+            $table->string('submitted')->default(false);
+            $table->string('drug_issued')->default(false);
+            
             $table->timestamps();
         });
     }

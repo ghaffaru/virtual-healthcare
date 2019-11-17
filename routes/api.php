@@ -30,7 +30,9 @@ Route::group(['prefix' => 'patient'], function () {
     Route::get('/appointments','PatientsController@appointments');
     Route::delete('/cancel-appointment/{appointment}','PatientsController@cancel_appointment');
     Route::post('/request-ambulance','PatientsController@request_ambulance');
-   
+    Route::get('/prescriptions', 'PatientsController@prescriptions');
+    Route::put('/prescription/{prescription}/submit','PatientsController@submitPrescription');
+
 });
 
 Route::get('/doctors','PatientsController@list_all_doctors');
@@ -68,6 +70,16 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/registration/requirement', 'DoctorsControllers\Auth\RegistrationRequirement@getRequirement');
     
 }); 
+
+Route::group(['prefix' => 'pharmacy'], function () {
+    
+    Route::post('/add-drug','PharmacyController@addDrug');
+    Route::put('/drug/{pharmacy}','PharmacyController@updateDrug');
+    Route::get('/drugs','PharmacyController@index');
+    Route::get('/prescriptions','PharmacyController@prescriptions');
+    Route::get('/prescription/{prescription}','PharmacyController@prescription');
+    Route::post('/{prescription}/issue_drugs','PharmacyController@issueDrugs');
+});
 
 
 

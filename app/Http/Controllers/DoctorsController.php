@@ -8,12 +8,13 @@ use App\Http\Resources\DoctorsAppointmentResource;
 use App\Doctor;
 use App\Http\Requests\MakePrescriptionRequest;
 
+use App\Prescription;
 class DoctorsController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth:doctor')->only(['list_appointment','approve_appointments']);
+        $this->middleware(['multiauth:doctor']);
     }
     
     // List appointment
@@ -26,7 +27,6 @@ class DoctorsController extends Controller
         // $unapproved = $doctor->appointments->where('approved', false);
 
         $appointment = $doctor->appointments;
-
 
         // $appointment = [
 
@@ -59,16 +59,16 @@ class DoctorsController extends Controller
 
     //Make prescription
     public function make_prescription(MakePrescriptionRequest $request){
-        $prescrition = Prescription::create([
+        $prescription = Prescription::create([
             'user_id' => $request->user_id,
-            'doctor_id' => $request->doctor_id,
+            'doctor_id' => auth()->guard('doctor')->id(),
             'case_history' => $request->case_history,
             'medication' => $request->medication,
-            'medication_from_pharmacist' => $request->medication_from_pharmacist,
+            // 'medication_from_pharmacist' => $request->medication_from_pharmacist,
         ]);
 
-        return respone()->json([
-            success => true,
+        return response()->json([
+            'prescription' => $prescription,
         ]);
     }
 }

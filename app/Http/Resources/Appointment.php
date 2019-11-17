@@ -18,6 +18,7 @@ class Appointment extends JsonResource
     public function toArray($request)
     {
         $doctor = Doctor::findOrFail($this->doctor_id);
+        
         return [
             'id' => $this->id,
             'doctor' => $doctor->name,

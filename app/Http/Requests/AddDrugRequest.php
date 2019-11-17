@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MakePrescriptionRequest extends FormRequest
+class AddDrugRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,9 @@ class MakePrescriptionRequest extends FormRequest
     {
         return [
             //
-            'user_id' => ['required'],
-            'case_history' => ['required'],
-            'medication' => ['required']
+            'drug_name' => ['required','unique:pharmacists'],
+            'quantity' => ['required','integer'],
+            'price' => ['required','double']
         ];
     }
 }

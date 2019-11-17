@@ -12,15 +12,20 @@ use App\Http\Resources\Doctor as DoctorResource;
 use Illuminate\Http\Request;
 use App\User;
 use App\Ambulance;
+use App\Http\Resources\PrescriptionResource;
+use App\Prescription;
 use Hash;
 use Illuminate\Support\Carbon;
 
+
 class PatientsController extends Controller
 {
+    
     //
     public function __construct()
     {
-        $this->middleware('auth:api')->only(['book_appointment','appointments','cancel_appointment']);
+        $this->middleware('auth:api')
+             ->only(['book_appointment','appointments','cancel_appointment','prescriptions','submitPrescription']);
     }
 
     public function store(CreatePatientRequest $request)
@@ -108,5 +113,27 @@ class PatientsController extends Controller
         ]);
     }
 
+    // pharmacy stuff
+    public function prescriptions()
+    {
+        $prescriptions = Prescription::where([
+            'user_id' => auth()->guard('api')->id(),
+        ])->get();
+        
+        return PrescriptionResource::collection($prescriptions);
+        
+    }
+
+    public function submitPrescription(Prescription $prescription)
+    {
+        $this->validate(request(), [
+            'submitted' => 'required'
+        ]);
+        
+        $prescription->submitted = request()->submitted;
+        $prescription->save();
+
+        return new PrescriptionResource($prescription);
+    }
 
 }
