@@ -51,11 +51,15 @@ return [
             'provider' => 'doctors',
         ],
 
+        'staff'  => [
+            'driver' => 'passport',
+            'provider' => 'staffs',
+        ],
+
         'pharmacist' => [
             'driver' => 'passport',
             'provider' => 'pharmacists'
         ],
-
         'api' => [
             'driver' => 'passport',
             'provider' => 'users',
@@ -89,6 +93,12 @@ return [
         'doctors' => [
             'driver' => 'eloquent',
             'model' => App\Doctor::class,
+        ],
+
+
+        'staffs' => [
+            'driver' => 'eloquent',
+            'model' => App\Employee::class,
         ],
 
         'admins' => [

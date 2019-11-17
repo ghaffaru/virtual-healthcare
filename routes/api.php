@@ -67,7 +67,15 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::patch('/department/{department}/assign-head', 'AdminsControllers\DepartmentsController@assignHead');
 
-    Route::get('/registration/requirement', 'DoctorsControllers\Auth\RegistrationRequirement@getRequirement');
+    Route::get('/doctors-registration-requirement', 'DoctorsControllers\Auth\RegistrationRequirement@getRequirement');
+
+    Route::get('/staff-registration-requirement', 'AdminsControllers\StaffsController@getStaffRegistrationRequirement');
+
+    Route::get('/view/{employee}/staff', 'AdminsControllers\StaffsController@show');
+
+    Route::patch('/edit/{employee}/staff', 'AdminsControllers\StaffsController@update');
+
+    Route::delete('/delete/{employee}/staff', 'AdminsControllers\StaffsController@destroy');
     
 }); 
 
@@ -82,4 +90,15 @@ Route::group(['prefix' => 'pharmacy'], function () {
 });
 
 
+Route::group(['prefix' => 'staff'], function () {
+
+    Route::post('/{employee}/reset-password', 'EmployeesControllers\StaffController@resetDefaultPassword');
+
+    Route::get('/{employee}/request-code', 'StaffAttendanceController@requestCode');
+
+    Route::post('/{staffAttendance}/checkin', 'StaffAttendanceController@checkin');
+
+    Route::post('/{staffAttendance}/checkout', 'StaffAttendanceController@checkout');
+
+});
 
