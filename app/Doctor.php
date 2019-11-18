@@ -24,4 +24,16 @@ class Doctor extends Authenticatable
     {
         return $this->hasMany('App\StaffAttendance');
     }
+
+    public function message()
+    {
+        return $this->hasMany('App\Message');
+    }
+
+
+    /* public function conversation()
+    {
+        return $this->hasM
+    } */
+
 }

@@ -41,7 +41,17 @@ class Employee extends Authenticatable
         return $this->hasMany('App\StaffAttendance');
     }
 
-   // public function a
+    public function sender()
+    {
+        return $this->hasMany('App\Message', 'sender_id');
+    }
+
+    public function recipient()
+    {
+        return $this->hasMany('App\Message', 'recipient_id');
+    }
+
+
 
 
 }

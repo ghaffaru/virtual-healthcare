@@ -19,4 +19,9 @@ class Department extends Model
     {
         return $this->belongsTo('App\Employee', 'head_of_department');
     }
+
+    public function group()
+    {
+        return $this->hasMany('App\Message', 'group_id');
+    }
 }

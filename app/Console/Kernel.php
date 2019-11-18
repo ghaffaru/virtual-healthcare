@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         //
     ];
 
+
     /**
      * Define the application's command schedule.
      *
