@@ -15,6 +15,7 @@ class CreateStaffAttendancesTable extends Migration
     {
         Schema::create('staff_attendances', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('admin_id')->unsigned()->nullable(); 
             $table->integer('employee_id')->unsigned()->nullable();
             $table->integer('doctor_id')->unsigned()->nullable();
             $table->timestamp('checkin')->nullable();

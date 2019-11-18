@@ -6,6 +6,8 @@ use App\StaffAttendance;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Employee;
+use App\Doctor;
+use App\Admin;
 
 class StaffAttendanceController extends Controller
 {
@@ -14,11 +16,9 @@ class StaffAttendanceController extends Controller
         $this->middleware('api');
     }
 
-    public function requestCode(Employee $employee)
+    public function requestCode($logs)
     {
         
-        $logs = $employee->attendanceLogs()->create(['qrcode' => str_random(5)]);
-
         $path = 'images/'.now().'qrcode.png';
 
         #generate qrcode
@@ -35,6 +35,29 @@ class StaffAttendanceController extends Controller
 
     }
 
+    public function requestCodeForDoctor(Doctor $doctor)
+    {
+        $logs = $doctor->attendanceLogs()->create(['qrcode' => str_random(5)]);
+
+        return $this->requestCode($logs);
+    }
+
+    public function requestCodeForAdmin(Admin $admin)
+    {
+        $logs = $admin->attendanceLogs()->create(['qrcode' => str_random(5)]);
+
+        return $this->requestCode($logs);
+    }
+
+
+    public function requestCodeForStaff(Employee $employee)
+    {
+        $logs = $employee->attendanceLogs()->create(['qrcode' => str_random(5)]);
+
+        return $this->requestCode($logs);
+    }
+
+
     public function checkin(StaffAttendance $staffAttendance)
     {
         if($staffAttendance)
@@ -43,7 +66,7 @@ class StaffAttendanceController extends Controller
             {
                 $staffAttendance->update(['checkin' => now()]);
 
-                return response()->json(['success' => 'You are checked'], 200);
+                return response()->json(['success' => 'You checked in'], 200);
             
             }else{
 
@@ -57,7 +80,7 @@ class StaffAttendanceController extends Controller
 
     public function checkout(staffAttendance $staffAttendance)
     {
-        $staffAttendance->update(['checkin' => now()]);
+        $staffAttendance->update(['checkout' => now()]);
 
         return response()->json(['success' => 'You checked out'], 200);
     }

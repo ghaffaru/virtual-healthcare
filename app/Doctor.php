@@ -18,4 +18,10 @@ class Doctor extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function attendanceLogs()
+    {
+        return $this->hasMany('App\StaffAttendance');
+    }
 }

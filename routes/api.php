@@ -37,6 +37,11 @@ Route::group(['prefix' => 'patient'], function () {
 
 Route::get('/doctors','PatientsController@list_all_doctors');
 
+Route::post('/{staffAttendance}/checkin', 'StaffAttendanceController@checkin');
+
+Route::post('/{staffAttendance}/checkout', 'StaffAttendanceController@checkout');
+
+
 
 Route::group(['prefix' => 'doctor'], function () {
 
@@ -46,6 +51,7 @@ Route::group(['prefix' => 'doctor'], function () {
     Route::post('/prescription/make', 'DoctorsController@make_prescription');
     Route::post('/{doctor}/reset-password', 'DoctorsControllers\Auth\RegisterController@resetDefaultPassword');
 
+    Route::get('/{doctor}/request-code', 'StaffAttendanceController@requestCodeForDoctor');
 
 });
 
@@ -76,6 +82,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::patch('/edit/{employee}/staff', 'AdminsControllers\StaffsController@update');
 
     Route::delete('/delete/{employee}/staff', 'AdminsControllers\StaffsController@destroy');
+
+    Route::get('/{admin}/request-code', 'StaffAttendanceController@requestCodeForAdmin');
     
 }); 
 
@@ -94,11 +102,7 @@ Route::group(['prefix' => 'staff'], function () {
 
     Route::post('/{employee}/reset-password', 'EmployeesControllers\StaffController@resetDefaultPassword');
 
-    Route::get('/{employee}/request-code', 'StaffAttendanceController@requestCode');
-
-    Route::post('/{staffAttendance}/checkin', 'StaffAttendanceController@checkin');
-
-    Route::post('/{staffAttendance}/checkout', 'StaffAttendanceController@checkout');
+    Route::get('/{employee}/request-code', 'StaffAttendanceController@requestCodeForStaff');
 
 });
 
