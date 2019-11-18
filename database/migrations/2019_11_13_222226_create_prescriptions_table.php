@@ -24,7 +24,7 @@ class CreatePrescriptionsTable extends Migration
             // $table->string('medication_from_pharmacist');
             $table->string('submitted')->default(false);
             $table->string('drug_issued')->default(false);
-            
+            $table->double('total_amount')->default(0.0);
             $table->timestamps();
         });
     }

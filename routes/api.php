@@ -32,7 +32,8 @@ Route::group(['prefix' => 'patient'], function () {
     Route::post('/request-ambulance','PatientsController@request_ambulance');
     Route::get('/prescriptions', 'PatientsController@prescriptions');
     Route::put('/prescription/{prescription}/submit','PatientsController@submitPrescription');
-
+    Route::get('/pay/{prescription}','PaymentController@pay');
+    Route::get('/check-payment-status/{prescription}','PaymentController@checkPaymentStatus');
 });
 
 Route::get('/doctors','PatientsController@list_all_doctors');
@@ -102,3 +103,6 @@ Route::group(['prefix' => 'staff'], function () {
 
 });
 
+Route::group(['prefix' => 'payment'], function () {
+    Route::get('/callback/{status}/{transac_id}/{cust_ref}/{pay_token}','PaymentController@callback');
+});
