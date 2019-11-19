@@ -88,8 +88,8 @@ class PaymentController extends Controller
         ]);
 
         $payment = Payment::where([
-            'prescription_id' => $prescription->id
-        ])->get();
+                            'prescription_id' => $prescription->id
+                        ])->get()->first();
 
          // Check payment status
          $data = [
@@ -120,6 +120,8 @@ class PaymentController extends Controller
             if ($result['result'] == 'CONFIRMED') {
                 $payment->status = true;
                 $payment->save();
+
+                
                 return response()->json([
                     'success' => true
                 ]);
