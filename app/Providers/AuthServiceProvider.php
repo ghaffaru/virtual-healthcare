@@ -28,7 +28,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Route::group(['middleware' => ['oauth.providers',\Barryvdh\Cors\HandleCors::class]], function () {
+        Passport::routes(null, ['middleware' => [\Barryvdh\Cors\HandleCors::class]]);
+
+        Route::group(['middleware' => ['oauth.providers']], function () {
             
             Passport::routes(function ($router) {
                 return $router->forAccessTokens();
