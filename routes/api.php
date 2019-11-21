@@ -47,7 +47,6 @@ Route::group(['prefix' => 'doctor'], function () {
     Route::post('/prescription/make', 'DoctorsController@make_prescription');
     Route::post('/{doctor}/reset-password', 'DoctorsControllers\Auth\RegisterController@resetDefaultPassword');
 
-
 });
 
 Route::group(['prefix' => 'admin'], function () {
