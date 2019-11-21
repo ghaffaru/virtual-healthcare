@@ -12,6 +12,8 @@ class Doctor extends Authenticatable
 {
     use Notifiable, HasMultiAuthApiTokens;
 
+    protected $guard = 'doctor';
+
     protected $guarded = ['id'];
 
     

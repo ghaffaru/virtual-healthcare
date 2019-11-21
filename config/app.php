@@ -176,6 +176,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
+        SMartins\PassportMultiauth\Providers\MultiauthServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
+
     ],
 
     /*

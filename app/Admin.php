@@ -12,6 +12,8 @@ class Admin extends Authenticatable
 {
     use Notifiable, HasMultiAuthApiTokens;
 
+    protected $guard = 'admin';
+
     protected $guarded = ['id'];
 
     

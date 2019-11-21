@@ -12,6 +12,8 @@ class Employee extends Authenticatable
 {
     use Notifiable, HasMultiAuthApiTokens;
 
+    protected $guard = 'staff';
+
     protected $guarded = ['id'];
 
     
@@ -50,6 +52,7 @@ class Employee extends Authenticatable
     {
         return $this->hasMany('App\Message', 'recipient_id');
     }
+
 
 
 

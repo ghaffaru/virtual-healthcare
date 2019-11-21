@@ -18,8 +18,6 @@ class StaffAttendance extends Model
         return $this->belongsTo('App\Admin');
     }
 
-
-
     public function doctor()
     {
         return $this->belongsTo('App\Doctor');

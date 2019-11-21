@@ -17,6 +17,10 @@ class CreateConversationsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user1_id')->unsigned()->nullable();
             $table->integer('user2_id')->unsigned()->nullable();
+            $table->boolean('staffschat')->nullable(); #staff to staff
+            $table->boolean('doctorschat')->nullable(); #doctor to doctor
+            $table->boolean('pharmacistschat')->nullable(); #pharmacist to pharmacist
+            $table->boolean('doctor_patientschat')->nullable();
             $table->integer('department_id')->unsigned()->nullable(); #for group conversation 
             $table->timestamps();
         });

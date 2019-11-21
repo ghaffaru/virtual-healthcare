@@ -104,5 +104,7 @@ Route::group(['prefix' => 'staff'], function () {
 
     Route::get('/{employee}/request-code', 'StaffAttendanceController@requestCodeForStaff');
 
+    Route::post('/{employee}/message', 'MessagesController@staffChat');
+
 });
 

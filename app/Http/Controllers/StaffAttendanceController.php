@@ -13,11 +13,12 @@ class StaffAttendanceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('api');
+        $this->middleware(['api']);
     }
 
-    public function requestCode($logs)
+    public function requestCode($employeeType)
     {
+        $logs = $employeeType->attendanceLogs()->create(['qrcode' => str_random(5)]);
         
         $path = 'images/'.now().'qrcode.png';
 
@@ -37,26 +38,18 @@ class StaffAttendanceController extends Controller
 
     public function requestCodeForDoctor(Doctor $doctor)
     {
-        $logs = $doctor->attendanceLogs()->create(['qrcode' => str_random(5)]);
-
-        return $this->requestCode($logs);
+        return $this->requestCode($doctor);
     }
 
     public function requestCodeForAdmin(Admin $admin)
     {
-        $logs = $admin->attendanceLogs()->create(['qrcode' => str_random(5)]);
-
-        return $this->requestCode($logs);
+        return $this->requestCode($admin);
     }
-
 
     public function requestCodeForStaff(Employee $employee)
     {
-        $logs = $employee->attendanceLogs()->create(['qrcode' => str_random(5)]);
-
-        return $this->requestCode($logs);
+        return $this->requestCode($employee);
     }
-
 
     public function checkin(StaffAttendance $staffAttendance)
     {

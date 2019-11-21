@@ -15,6 +15,13 @@ use App\Jobs\StaffRegistrationAlert;
 
 class StaffsController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware(['multiauth:admin','api']);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -159,11 +166,11 @@ class StaffsController extends Controller
             $fileNameToStore = request()->file('avatar')->getClientOriginalName(); 
 
             # image path
-            $path = 'public/images/'. $employee->id;
+            $path = 'public/images/employees/'. $employee->id;
 
             request()->file('avatar')->storeAs($path, $fileNameToStore);
 
-            $employee->avatar = '/storage/images/'.$employee->id. '/'. $fileNameToStore;
+            $employee->avatar = '/storage/images/employees'.$employee->id. '/'. $fileNameToStore;
 
             $employee->save();
 
