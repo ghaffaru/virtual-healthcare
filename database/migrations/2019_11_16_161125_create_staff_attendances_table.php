@@ -18,6 +18,7 @@ class CreateStaffAttendancesTable extends Migration
             $table->integer('admin_id')->unsigned()->nullable(); 
             $table->integer('employee_id')->unsigned()->nullable();
             $table->integer('doctor_id')->unsigned()->nullable();
+            $table->integer('pharmacist_id')->unsigned()->nullable();
             $table->timestamp('checkin')->nullable();
             $table->timestamp('checkout')->nullable();
             $table->string('qrcode');

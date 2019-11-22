@@ -71,6 +71,12 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/staff/list', 'AdminsControllers\StaffsController@index'); #list of all staff
 
+    Route::post('register/pharmacist', 'AdminsControllers\PharmacistsController@register');
+
+    Route::patch('pharmacist/{pharmacist}/edit', 'AdminsControllers\PharmacistsController@update');
+
+    Route::delete('/delete/{id}/pharmacist', 'AdminsControllers\PharmacistsController@destroy');
+
     Route::patch('/department/{department}/assign-head', 'AdminsControllers\DepartmentsController@assignHead');
 
     Route::get('/doctors-registration-requirement', 'DoctorsControllers\Auth\RegistrationRequirement@getRequirement');
@@ -108,3 +114,13 @@ Route::group(['prefix' => 'staff'], function () {
 
 });
 
+
+Route::group(['prefix' => 'pharmacist'], function () {
+
+    Route::post('/{pharmacist}/reset-password', 'EmployeesControllers\StaffController@resetDefaultPassword');
+
+    Route::get('/{pharmacist}/request-code', 'StaffAttendanceController@requestCodeForPharmacist');
+
+    Route::post('/{pharmacist}/message', 'MessagesController@pharmacistChat');
+
+});

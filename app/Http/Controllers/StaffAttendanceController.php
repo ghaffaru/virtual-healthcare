@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\StaffAttendance;
-use Illuminate\Http\Request;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Employee;
 use App\Doctor;
 use App\Admin;
+use App\Pharmacist;
+use App\StaffAttendance;
+use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class StaffAttendanceController extends Controller
 {
@@ -39,6 +40,11 @@ class StaffAttendanceController extends Controller
     public function requestCodeForDoctor(Doctor $doctor)
     {
         return $this->requestCode($doctor);
+    }
+
+    public function requestCodeForPharmacist(Pharmacist $pharmacist)
+    {
+        return $this->requestCode($pharmacist);
     }
 
     public function requestCodeForAdmin(Admin $admin)

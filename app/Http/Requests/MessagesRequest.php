@@ -25,7 +25,7 @@ class MessagesRequest extends FormRequest
         return [
             
             'message' => 'nullable|string',
-            'attachment' => 'nullable|file|mimes:pdf,docx,xclx',
+            'attachment' => 'nullable|file|mimes:pdf,docx,xlsx',
             'recipient_id' => 'required|integer' 
         ];
     }

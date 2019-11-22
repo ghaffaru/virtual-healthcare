@@ -11,7 +11,19 @@ class Pharmacist extends Authenticatable
     //
     use Notifiable, HasMultiAuthApiTokens;
 
-   // protected $guard = 'pharmacist';
+    protected $guard = 'pharmacist';
 
     protected $guarded = ['id'];
+
+
+    public function department()
+    {
+        return $this->belongsTo('App\Department');
+    }
+
+    public function attendanceLogs()
+    {
+        return $this->hasMany('App\StaffAttendance');
+    }
+    
 }

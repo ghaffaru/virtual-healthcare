@@ -92,12 +92,11 @@ class StaffsController extends Controller
         if(StaffRegistrationAlert::dispatch($employee))
         {
             return response()->json(['success' => 'Staff added'], 200);
-        }
-
-  
-        
+        } 
 
     }
+
+    
 
     /**
      * Display the specified resource.
@@ -132,7 +131,7 @@ class StaffsController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(StaffManagementFormRequest $request, Employee $employee)
+    public function update(Request $request, Employee $employee)
     {
         $employee->update($request->all());
 
@@ -149,7 +148,7 @@ class StaffsController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        Storage::deleteDirectory('public/images/'.$employee->id);
+        Storage::deleteDirectory('public/images/employees/'.$employee->id);
         
         $employee->delete();
 
