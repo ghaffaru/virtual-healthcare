@@ -45,6 +45,10 @@ Route::group(['prefix' => 'doctor'], function () {
     Route::get('/appointment/approve/{appointment}', 'DoctorsController@approve_appointment');
     Route::post('/prescription/make', 'DoctorsController@make_prescription');
     Route::post('/{doctor}/reset-password', 'DoctorsControllers\Auth\RegisterController@resetDefaultPassword');
+    Route::post('/patientrecord/write','DoctorsController@write_patient_record');
+    Route::get('/{user}/get-record','DoctorsController@get_patient_record');
+
+
 
 
 });
