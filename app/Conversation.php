@@ -30,21 +30,12 @@ class Conversation extends Model
         return $this->hasMany('App\Message');
     }
 
-    public function addMessage($sender, $recipient, $message, $attachment)
+    public function addMessage($chatMessage)
     {
-       $message = $this->message()->create([
+       $storedMessage = $this->message()->create($chatMessage);
 
-            'sender_id' => $sender,
-
-            'recipient_id' => $recipient,
-
-            'message' => $message,
-
-            'attachment' => $attachment
-
-        ]);
-
-        return $message;
+        return $storedMessage;
 
     }
+    
 }

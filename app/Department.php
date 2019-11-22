@@ -20,8 +20,15 @@ class Department extends Model
         return $this->belongsTo('App\Employee', 'head_of_department');
     }
 
-    public function group()
+    public function conversation()
     {
-        return $this->hasMany('App\Message', 'group_id');
+        return $this->hasOne('App\Conversation', 'department_id');
+    }
+
+
+
+    public function message()
+    {
+        return $this->hasOne('App\Message', 'department_id');
     }
 }

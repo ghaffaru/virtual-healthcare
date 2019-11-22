@@ -21,7 +21,7 @@ class CreateConversationsTable extends Migration
             $table->boolean('doctorschat')->nullable(); #doctor to doctor
             $table->boolean('pharmacistschat')->nullable(); #pharmacist to pharmacist
             $table->boolean('doctor_patientschat')->nullable();
-            $table->integer('department_id')->unsigned()->nullable(); #for group conversation 
+            $table->integer('department_id')->unsigned()->unique()->nullable(); #for group conversation 
             $table->timestamps();
         });
     }

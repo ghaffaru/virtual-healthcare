@@ -41,6 +41,10 @@ Route::post('/{staffAttendance}/checkin', 'StaffAttendanceController@checkin');
 
 Route::post('/{staffAttendance}/checkout', 'StaffAttendanceController@checkout');
 
+Route::get('department/{department}/message', 'MessagesController@getDepartmentChat');
+
+Route::post('department/{department}/message', 'MessagesController@storeDepartmentChat');
+
 
 
 Route::group(['prefix' => 'doctor'], function () {

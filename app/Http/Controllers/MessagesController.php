@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Message;
-use App\Conversation;
 use App\Employee;
-use App\ConversationType;
+use App\Pharmacist;
+use App\Conversation;
+use App\Http\Requests\MessagesRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class MessagesController extends Controller
@@ -41,9 +43,62 @@ class MessagesController extends Controller
     }
 
 
+    /*
+
+    */
+
+    public function getstaffChat(Employee $employee)
+    {
+        #field 
+        $field = 'staffschat';
+
+        $this->store($employee, $field);
+    }
+
+
+    public function getdoctorChat(Doctor $doctor)
+    {
+        $field = 'doctorschat';
+
+        $this->store($doctor, $field);
+    }
+
+
+    public function getpharmacistChat(MessagesRequest $request, Pharmacist $pharmacist)
+    {
+        $field = 'pharmacistschat';
+
+        $this->store($pharmacist, $field);
+    }
+
+
+
     public function doctor_patient()
     {
 
+    }
+
+    public function storeDepartmentChat(Department $department)
+    {
+        if(!$conversation = $department->conversation)
+        {
+            $attributes = ['department_id' => $department->id];
+
+            $conversation = $this->createConversation($attributes);
+        }
+
+        $message = [
+
+            'sender_id' => request()->id,
+
+            'message' => request()->message,
+
+            'attachment' => $this->storeFile($conversation) ?? null
+        
+        ];
+        
+        #$messageAttributes
+        $conversation->addMessage($message);
     }
 
     /**
@@ -73,19 +128,20 @@ class MessagesController extends Controller
             $conversation = $this->createConversation($attributes);  
         }
 
-         #check for file attachment
-         if(request()->hasFile('attachment'))
-         {
-             #save file
-            $attachment = $this->storeFile($conversation);
-         
-        } else {
+        #message to store
+        $message = [
 
-            $attachment = null;
-        } 
+            'sender_id' => $user->id,
 
+            'recipient_id' => request()->id,
+
+            'message' => request()->message,
+
+            'attachment' => $this->storeFile($conversation) ?? null #if no file attachment set field to null
+        
+        ];
         #store message and attachment
-        $message = $conversation->addMessage($user->id, request()->id, nl2br(request()->message), $attachment);
+        $message = $conversation->addMessage($message);
 
         return ['message' => nl2br(request()->message)];
         
@@ -102,18 +158,37 @@ class MessagesController extends Controller
 
     public function storeFile(Conversation $conversation)
     {
-        $fileNameToStore = request()->file('attachment')->getClientOriginalName();
+        if(request()->hasFile('attachment'))
+        {
 
-          # image path
-          $path = 'public/attachments/'. $conversation->id;
+            $fileNameToStore = request()->file('attachment')->getClientOriginalName();
 
-          request()->file('attachment')->storeAs($path, $fileNameToStore);
+            # image path
+            $path = 'public/attachments/'. $conversation->id;
 
-          $attachment = '/storage/attachments/'.$conversation->id. '/'. $fileNameToStore; #symbolic path
+            request()->file('attachment')->storeAs($path, $fileNameToStore);
 
-          return $attachment;
+            $attachment = '/storage/attachments/'.$conversation->id. '/'. $fileNameToStore; #symbolic path
+
+            return $attachment;
+
+        }
 
     }
+
+    public function chatWith(User $user)
+    {
+
+       $conversation = Conversation::where([['user1_id', auth()->id()], ['user2_id', $user->id]])
+
+        ->orWhere([['user1_id', $user->id], ['user2_id', auth()->id()]])->first();
+
+        return $conversation->message;
+
+        //return MessageResource::collection($messages);
+     // return view('chats.show', compact('messages', 'user'));
+    }
+
     
 
 
