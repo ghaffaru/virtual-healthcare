@@ -31,9 +31,11 @@ Route::group(['prefix' => 'patient'], function () {
     Route::delete('/cancel-appointment/{appointment}','PatientsController@cancel_appointment');
     Route::post('/request-ambulance','PatientsController@request_ambulance');
     Route::get('/prescriptions', 'PatientsController@prescriptions');
+    Route::get('/prescription/{prescription}', 'PatientsController@prescription');
     Route::put('/prescription/{prescription}/submit','PatientsController@submitPrescription');
     Route::get('/pay/{prescription}','PaymentController@pay');
     Route::get('/check-payment-status/{prescription}','PaymentController@checkPaymentStatus');
+    
 });
 
 Route::get('/doctors','PatientsController@list_all_doctors');

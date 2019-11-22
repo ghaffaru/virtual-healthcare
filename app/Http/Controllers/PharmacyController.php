@@ -75,8 +75,9 @@ class PharmacyController extends Controller
 
         }
         $prescription->total_amount = $total_amount;
+        $prescription->drug_issued = true;
         $prescription->save();
-        
+
         return response()->json([
             'total_amount' => $total_amount,
             'drugs' => $data

@@ -66,6 +66,7 @@ class PatientsController extends Controller
             $data
         );
     }
+    
 
     public function appointments()
     {
@@ -124,6 +125,10 @@ class PatientsController extends Controller
         
     }
 
+    public function prescription(Prescription $prescription)
+    {
+        return new PrescriptionResource($prescription);
+    }
     public function submitPrescription(Prescription $prescription)
     {
         $this->validate(request(), [
