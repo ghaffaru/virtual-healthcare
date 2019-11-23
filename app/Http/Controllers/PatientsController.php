@@ -115,7 +115,8 @@ class PatientsController extends Controller
         $data = $appointment->delete();
 
         return response()->json([
-            'message' => 'appointment cancelled'
+            'message' => 'appointment cancelled',
+            'res' => 'cancel'
         ]);
     }
 
