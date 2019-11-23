@@ -63,7 +63,8 @@ class PatientsController extends Controller
 
         if ($check->count() > 0) {
             return response()->json([
-                'message' => 'appointment already booked'
+                'message' => 'appointment already booked',
+                'res' => 'booked'
             ]);
         }
         $data = Appointment::create([

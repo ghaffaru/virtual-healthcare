@@ -18,7 +18,7 @@ class DoctorsController extends Controller
     }
     
     // List appointment
-    public function list_appointment(Doctor $doctor){
+    public function list_appointment(){
         
     
         
@@ -26,7 +26,13 @@ class DoctorsController extends Controller
 
         // $unapproved = $doctor->appointments->where('approved', false);
 
-        $appointment = $doctor->appointments;
+        // $appointment = $doctor->appointments;
+        $doctor = auth()->guard('doctor')->user()->id;
+        $appointments = Appointment::where([
+            'doctor_id' => $doctor,
+        ])->get();
+
+        
 
         // $appointment = [
 
@@ -34,9 +40,9 @@ class DoctorsController extends Controller
         //     "approved" => $approved
         // ];
 
-         if ($appointment->count() > 0) {
+         if ($appointments->count() > 0) {
 
-           return DoctorsAppointmentResource::collection($appointment);
+           return DoctorsAppointmentResource::collection($appointments);
 
         } else {
 
