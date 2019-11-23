@@ -31,8 +31,13 @@ Route::group(['prefix' => 'patient'], function () {
     Route::delete('/cancel-appointment/{appointment}','PatientsController@cancel_appointment');
     Route::post('/request-ambulance','PatientsController@request_ambulance');
     Route::get('/prescriptions', 'PatientsController@prescriptions');
+    Route::get('/prescription/{prescription}', 'PatientsController@prescription');
     Route::put('/prescription/{prescription}/submit','PatientsController@submitPrescription');
-
+    Route::get('/pay/{prescription}','PaymentController@pay');
+    Route::get('/check-payment-status/{prescription}','PaymentController@checkPaymentStatus');
+    Route::post('create', 'PasswordResetController@create');
+    Route::get('password/find/{token}', 'PasswordResetController@find');
+    Route::post('password-reset', 'PasswordResetController@reset');
 });
 
 Route::get('/doctors','PatientsController@list_all_doctors');
@@ -41,13 +46,12 @@ Route::get('/doctors','PatientsController@list_all_doctors');
 Route::group(['prefix' => 'doctor'], function () {
 
     Route::post('/register', 'DoctorsControllers\Auth\RegisterController@register');
-    Route::get('/{doctor}/appointment-list', 'DoctorsController@list_appointment');
+    Route::get('/appointment-list', 'DoctorsController@list_appointment');
     Route::get('/appointment/approve/{appointment}', 'DoctorsController@approve_appointment');
     Route::post('/prescription/make', 'DoctorsController@make_prescription');
     Route::post('/{doctor}/reset-password', 'DoctorsControllers\Auth\RegisterController@resetDefaultPassword');
     Route::post('/patientrecord/write','DoctorsController@write_patient_record');
     Route::get('/{user}/get-record','DoctorsController@get_patient_record');
-
 
 
 
@@ -106,3 +110,6 @@ Route::group(['prefix' => 'staff'], function () {
 
 });
 
+Route::group(['prefix' => 'payment'], function () {
+    Route::get('/callback/{status}/{transac_id}/{cust_ref}/{pay_token}','PaymentController@callback');
+});

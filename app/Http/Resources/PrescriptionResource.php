@@ -16,10 +16,12 @@ class PrescriptionResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'doctor_name' => $this->doctor->name,
             'case_history' => $this->case_history,
             'medication' => $this->medication,
             'submitted' => $this->submitted,
-            'drug_issued' => $this->drug_issued
+            'drug_issued' => $this->drug_issued,
+            'created_at' => $this->created_at
         ];
     }
 }

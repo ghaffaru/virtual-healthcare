@@ -21,7 +21,7 @@ class DoctorsController extends Controller
     }
     
     // List appointment
-    public function list_appointment(Doctor $doctor){
+    public function list_appointment(){
         
     
         
@@ -29,17 +29,16 @@ class DoctorsController extends Controller
 
         // $unapproved = $doctor->appointments->where('approved', false);
 
-        $appointment = $doctor->appointments;
+        // $appointment = $doctor->appointments;
+        $doctor = auth()->guard('doctor')->user()->id;
+        $appointments = Appointment::where([
+            'doctor_id' => $doctor,
+        ])->get();
 
-        // $appointment = [
 
-        //     "unapproved" => $unapproved,
-        //     "approved" => $approved
-        // ];
+         if ($appointments->count() > 0) {
 
-         if ($appointment->count() > 0) {
-
-           return DoctorsAppointmentResource::collection($appointment);
+           return DoctorsAppointmentResource::collection($appointments);
 
         } else {
 
@@ -51,13 +50,17 @@ class DoctorsController extends Controller
 
     //Approve appointment
     public function approve_appointment(Appointment $appointment){
+
             $appointment->approved = true;
 
             $appointment->save();
 
             return response()->json([
-                'message' => 'Appointment approved.'
+                'message' => 'Appointment approved',
+                'res' => 'approved'
+
             ]);
+
     }
 
     //Make prescription

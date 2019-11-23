@@ -56,6 +56,17 @@ class PatientsController extends Controller
 
     public function book_appointment(BookAppointmentRequest $request) 
     {
+        $check = Appointment::where([
+            'doctor_id' => $request->doctor_id,
+            ['appointment_date', '>', now()]
+        ])->get();
+
+        if ($check->count() > 0) {
+            return response()->json([
+                'message' => 'appointment already booked',
+                'res' => 'booked'
+            ]);
+        }
         $data = Appointment::create([
             'user_id' => auth()->guard('api')->id(),
             'doctor_id' => $request->doctor_id,
@@ -63,9 +74,13 @@ class PatientsController extends Controller
         ]);
 
         return response()->json(
-            $data
+            [
+                'message' => 'appointment booked',
+                'res' => 'created'
+            ]
         );
     }
+
 
     public function appointments()
     {
@@ -82,7 +97,8 @@ class PatientsController extends Controller
              );
         } else {
             return response()->json([
-                'message' => 'No appointments'
+                'message' => 'No appointments',
+                'res' => 'none'
             ]);
         }
        
@@ -90,7 +106,6 @@ class PatientsController extends Controller
 
     public function cancel_appointment(Appointment $appointment)
     {
-
         if ($appointment->user_id != auth()->guard('api')->id()) {
             return response()->json([
                 'message' => 'unauthorized'
@@ -124,6 +139,10 @@ class PatientsController extends Controller
         
     }
 
+    public function prescription(Prescription $prescription)
+    {
+        return new PrescriptionResource($prescription);
+    }
     public function submitPrescription(Prescription $prescription)
     {
         $this->validate(request(), [
