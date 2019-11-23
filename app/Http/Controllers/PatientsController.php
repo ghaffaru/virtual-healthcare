@@ -74,7 +74,10 @@ class PatientsController extends Controller
         ]);
 
         return response()->json(
-            $data
+            [
+                'message' => 'appointment booked',
+                'res' => 'created'
+            ]
         );
     }
 
