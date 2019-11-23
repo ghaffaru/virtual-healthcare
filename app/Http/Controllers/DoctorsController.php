@@ -32,13 +32,6 @@ class DoctorsController extends Controller
             'doctor_id' => $doctor,
         ])->get();
 
-        
-
-        // $appointment = [
-
-        //     "unapproved" => $unapproved,
-        //     "approved" => $approved
-        // ];
 
          if ($appointments->count() > 0) {
 
@@ -54,13 +47,17 @@ class DoctorsController extends Controller
 
     //Approve appointment
     public function approve_appointment(Appointment $appointment){
+
             $appointment->approved = true;
 
             $appointment->save();
 
             return response()->json([
-                'message' => 'Appointment approved.'
+                'message' => 'Appointment approved',
+                'res' => 'approved'
+
             ]);
+
     }
 
     //Make prescription

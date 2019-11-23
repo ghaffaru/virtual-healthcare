@@ -97,7 +97,8 @@ class PatientsController extends Controller
              );
         } else {
             return response()->json([
-                'message' => 'No appointments'
+                'message' => 'No appointments',
+                'res' => 'none'
             ]);
         }
        
@@ -105,7 +106,6 @@ class PatientsController extends Controller
 
     public function cancel_appointment(Appointment $appointment)
     {
-
         if ($appointment->user_id != auth()->guard('api')->id()) {
             return response()->json([
                 'message' => 'unauthorized'

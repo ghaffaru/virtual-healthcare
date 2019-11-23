@@ -35,7 +35,9 @@ Route::group(['prefix' => 'patient'], function () {
     Route::put('/prescription/{prescription}/submit','PatientsController@submitPrescription');
     Route::get('/pay/{prescription}','PaymentController@pay');
     Route::get('/check-payment-status/{prescription}','PaymentController@checkPaymentStatus');
-    
+    Route::post('create', 'PasswordResetController@create');
+    Route::get('password/find/{token}', 'PasswordResetController@find');
+    Route::post('password-reset', 'PasswordResetController@reset');
 });
 
 Route::get('/doctors','PatientsController@list_all_doctors');
