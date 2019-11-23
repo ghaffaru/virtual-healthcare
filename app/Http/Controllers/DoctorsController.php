@@ -17,7 +17,7 @@ class DoctorsController extends Controller
 
     public function __construct()
     {
-        //$this->middleware(['multiauth:doctor']);
+        $this->middleware(['multiauth:doctor']);
     }
     
     // List appointment
@@ -86,8 +86,10 @@ class DoctorsController extends Controller
     }
 
     //Get Patient Record 
-    public function get_patient_record($user){
-            $get_record = PatientRecord::findorFail($user);
+    public function get_patient_record(User $user){
+            $get_record = PatientRecord::where([
+                'user_id' => $user->id
+            ])->get();
 
             if ($get_record->count() > 0) {
 
