@@ -56,6 +56,16 @@ class PatientsController extends Controller
 
     public function book_appointment(BookAppointmentRequest $request) 
     {
+        $check = Appointment::where([
+            'doctor_id' => $request->doctor_id,
+            ['appointment_date', '>', now()]
+        ])->get();
+
+        if ($check->count() > 0) {
+            return response()->json([
+                'message' => 'appointment already booked'
+            ]);
+        }
         $data = Appointment::create([
             'user_id' => auth()->guard('api')->id(),
             'doctor_id' => $request->doctor_id,
@@ -66,7 +76,7 @@ class PatientsController extends Controller
             $data
         );
     }
-    
+
 
     public function appointments()
     {
