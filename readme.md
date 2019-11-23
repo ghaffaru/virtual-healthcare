@@ -1,5 +1,4 @@
-[![Latest Version] (https://img.shields.io/github/languages/top/Ghaffaru15/virtual-healthcare-app?color=100%20%25&label=php)
-https://img.shields.io/travis/php-v/Ghaffaru15/virtual-healthcare/master
-https://img.shields.io/github/last-commit/Ghaffaru15/virtual-healthcare
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="54" height="20"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="54" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path fill="#555" d="M0 0h37v20H0z"/><path fill="#97ca00" d="M37 0h17v20H37z"/><path fill="url(#b)" d="M0 0h54v20H0z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="110"> <text x="195" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="270">stars</text><text x="195" y="140" transform="scale(.1)" textLength="270">stars</text><text x="445" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="70">4</text><text x="445" y="140" transform="scale(.1)" textLength="70">4</text></g> </svg>
+
 #Virtual Healthcare
 
