@@ -28,6 +28,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Passport::tokensExpireIn(now()->addDays(15));
+        
         Passport::routes(null, ['middleware' => [\Barryvdh\Cors\HandleCors::class]]);
 
         Route::group(['middleware' => ['oauth.providers', \Barryvdh\Cors\HandleCors::class]], function () {
