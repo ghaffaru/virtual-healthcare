@@ -9,4 +9,8 @@ class Prescription extends Model
     //
     protected $fillable = ['user_id','doctor_id','case_history','medication'];
 
+    public function doctor()
+    {
+        return $this->belongsTo(Doctor::class);
+    }
 }

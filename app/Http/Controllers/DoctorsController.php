@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Appointment;
 use App\Http\Resources\DoctorsAppointmentResource;
 use App\Doctor;
+use App\Http\Requests\GetPatientRecordRequest;
 use App\Http\Requests\MakePrescriptionRequest;
-
+use App\Http\Requests\WritePatientRecordRequest;
+use App\PatientRecord;
 use App\Prescription;
+use App\User;
 class DoctorsController extends Controller
 {
 
@@ -18,7 +21,7 @@ class DoctorsController extends Controller
     }
     
     // List appointment
-    public function list_appointment(Doctor $doctor){
+    public function list_appointment(){
         
     
         
@@ -26,17 +29,16 @@ class DoctorsController extends Controller
 
         // $unapproved = $doctor->appointments->where('approved', false);
 
-        $appointment = $doctor->appointments;
+        // $appointment = $doctor->appointments;
+        $doctor = auth()->guard('doctor')->user()->id;
+        $appointments = Appointment::where([
+            'doctor_id' => $doctor,
+        ])->get();
 
-        // $appointment = [
 
-        //     "unapproved" => $unapproved,
-        //     "approved" => $approved
-        // ];
+         if ($appointments->count() > 0) {
 
-         if ($appointment->count() > 0) {
-
-           return DoctorsAppointmentResource::collection($appointment);
+           return DoctorsAppointmentResource::collection($appointments);
 
         } else {
 
@@ -48,13 +50,17 @@ class DoctorsController extends Controller
 
     //Approve appointment
     public function approve_appointment(Appointment $appointment){
+
             $appointment->approved = true;
 
             $appointment->save();
 
             return response()->json([
-                'message' => 'Appointment approved.'
+                'message' => 'Appointment approved',
+                'res' => 'approved'
+
             ]);
+
     }
 
     //Make prescription
@@ -70,5 +76,33 @@ class DoctorsController extends Controller
         return response()->json([
             'prescription' => $prescription,
         ]);
+    }
+
+    //Write Patient Record
+    public function write_patient_record(WritePatientRecordRequest $request){
+        $get_record = PatientRecord::create([
+            'user_id' => $request->user_id,
+            'prescripition_id' => $request->prescription_id,
+            'report_type' => $request->report_type,
+            'description' => $request->description,
+        ]);
+    }
+
+    //Get Patient Record 
+    public function get_patient_record(User $user){
+            $get_record = PatientRecord::where([
+                'user_id' => $user->id
+            ])->get();
+
+            if ($get_record->count() > 0) {
+
+                return $get_record;
+     
+             } else {
+     
+                 return response()->json([
+                     'message' => 'No Record found'
+                 ]);
+             }
     }
 }

@@ -62,20 +62,26 @@ class PharmacyController extends Controller
     public function issueDrugs(Prescription $prescription)
     {
         $data = request()->all()['drugs'];
-
+        $total_amount = 0;
         for ($i=0; $i < count($data); $i++) { 
             DrugsPrescribed::create([
                 'prescription_id' => $prescription->id,
                 'pharmacy_id' => $data[$i]['pharmacy_id'],
                 'quantity' => $data[$i]['quantity']
             ]);
+
+            $drug = Pharmacy::findOrFail($data[$i]['pharmacy_id']);
+            $total_amount += ($data[$i]['quantity'] * $drug->price);
+
         }
+        $prescription->total_amount = $total_amount;
         $prescription->drug_issued = true;
         $prescription->save();
-        
-        return response()->json(
-            $data
-        );
+
+        return response()->json([
+            'total_amount' => $total_amount,
+            'drugs' => $data
+        ]);
         
     }
     
