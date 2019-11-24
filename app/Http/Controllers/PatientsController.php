@@ -57,6 +57,7 @@ class PatientsController extends Controller
     public function book_appointment(BookAppointmentRequest $request) 
     {
         $check = Appointment::where([
+            'user_id' => auth()->guard('api')->id(),
             'doctor_id' => $request->doctor_id,
             ['appointment_date', '>', now()]
         ])->get();

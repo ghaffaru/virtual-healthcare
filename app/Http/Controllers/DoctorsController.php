@@ -82,7 +82,7 @@ class DoctorsController extends Controller
     public function write_patient_record(WritePatientRecordRequest $request){
         $get_record = PatientRecord::create([
             'user_id' => $request->user_id,
-            'prescripition_id' => $request->prescription_id,
+            'prescription_id' => $request->prescription_id,
             'report_type' => $request->report_type,
             'description' => $request->description,
         ]);
@@ -96,13 +96,13 @@ class DoctorsController extends Controller
 
             if ($get_record->count() > 0) {
 
-                return $get_record;
+                return response()->json($get_record);
      
-             } else {
+            } else {
      
                  return response()->json([
                      'message' => 'No Record found'
                  ]);
-             }
+            }
     }
 }
