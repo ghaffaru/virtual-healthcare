@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MessagesRequest extends FormRequest
+class DepartmentsChatRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,7 +17,8 @@ class MessagesRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to png,jpg
+     * Get the validation rules that apply to the request.
+     *
      * @return array
      */
     public function rules()
@@ -26,7 +27,7 @@ class MessagesRequest extends FormRequest
             
             'message' => 'nullable|string',
             'attachment' => 'nullable|file|mimes:pdf,docx,xlsx',
-            'id' => 'required|integer' #recipient_id 
+            'sender_id' => 'required|integer' #recipient_id 
         ];
     }
 }

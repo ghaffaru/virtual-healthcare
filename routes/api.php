@@ -33,6 +33,10 @@ Route::group(['prefix' => 'patient'], function () {
     Route::get('/prescriptions', 'PatientsController@prescriptions');
     Route::put('/prescription/{prescription}/submit','PatientsController@submitPrescription');
 
+    Route::post('/{user}/doctor/message', 'MessagesController@patient_doctor');
+
+    Route::get('/{user}/doctor/message', 'MessagesController@getPatientDoctorChat');
+
 });
 
 Route::get('/doctors','PatientsController@list_all_doctors');
@@ -45,9 +49,18 @@ Route::get('department/{department}/message', 'MessagesController@getDepartmentC
 
 Route::post('department/{department}/message', 'MessagesController@storeDepartmentChat');
 
+Route::get('/{conversation}/conversation', 'MessagesController@chatWith');
+
+Route::get('/message-attachment/{message}/download', 'MessagesController@download');
+
 
 
 Route::group(['prefix' => 'doctor'], function () {
+
+    Route::get('/', function(){
+
+        return auth()->guard('doctor')->user();
+    })->middleware(['multiauth:doctor,api']);
 
     Route::post('/register', 'DoctorsControllers\Auth\RegisterController@register');
     Route::get('/{doctor}/appointment-list', 'DoctorsController@list_appointment');
@@ -57,9 +70,22 @@ Route::group(['prefix' => 'doctor'], function () {
 
     Route::get('/{doctor}/request-code', 'StaffAttendanceController@requestCodeForDoctor');
 
+    Route::post('{doctor}/message', 'MessagesController@doctorChat');
+
+    Route::get('/{doctor}/chats', 'MessagesController@getdoctorChats'); #return list of other doctors a doctor chats with
+
+    Route::post('/{doctor}/patient/message', 'MessagesController@doctor_patient');
+
+    Route::get('/{doctor}/patient/message', 'MessagesController@getDoctorPatientChat');
+
 });
 
 Route::group(['prefix' => 'admin'], function () {
+
+    Route::get('/', function(){
+
+        return auth()->guard('admin')->user();
+    })->middleware(['multiauth:admin,api']);
 
     Route::get('/department/{department}/staff-list', 'AdminsControllers\DepartmentsController@staffList');
 
@@ -115,6 +141,8 @@ Route::group(['prefix' => 'staff'], function () {
     Route::get('/{employee}/request-code', 'StaffAttendanceController@requestCodeForStaff');
 
     Route::post('/{employee}/message', 'MessagesController@staffChat');
+
+    Route::get('/{employee}/message', 'MessagesController@getStaffChat');
 
 });
 
