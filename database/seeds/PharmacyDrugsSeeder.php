@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Pharmacy;
+
 class PharmacyDrugsSeeder extends Seeder
 {
     /**

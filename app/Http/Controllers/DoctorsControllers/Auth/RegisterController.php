@@ -13,7 +13,7 @@ class RegisterController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware(['multiauth:admin,doctor','api']);
+        $this->middleware(['api']);
     }
 
     /**

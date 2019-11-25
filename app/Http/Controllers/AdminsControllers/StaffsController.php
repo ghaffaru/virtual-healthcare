@@ -15,6 +15,13 @@ use App\Jobs\StaffRegistrationAlert;
 
 class StaffsController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware(['multiauth:admin','api']);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -85,12 +92,11 @@ class StaffsController extends Controller
         if(StaffRegistrationAlert::dispatch($employee))
         {
             return response()->json(['success' => 'Staff added'], 200);
-        }
-
-  
-        
+        } 
 
     }
+
+    
 
     /**
      * Display the specified resource.
@@ -125,7 +131,7 @@ class StaffsController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(StaffManagementFormRequest $request, Employee $employee)
+    public function update(Request $request, Employee $employee)
     {
         $employee->update($request->all());
 
@@ -142,7 +148,7 @@ class StaffsController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        Storage::deleteDirectory('public/images/'.$employee->id);
+        Storage::deleteDirectory('public/images/employees/'.$employee->id);
         
         $employee->delete();
 
@@ -159,11 +165,11 @@ class StaffsController extends Controller
             $fileNameToStore = request()->file('avatar')->getClientOriginalName(); 
 
             # image path
-            $path = 'public/images/'. $employee->id;
+            $path = 'public/images/employees/'. $employee->id;
 
             request()->file('avatar')->storeAs($path, $fileNameToStore);
 
-            $employee->avatar = '/storage/images/'.$employee->id. '/'. $fileNameToStore;
+            $employee->avatar = '/storage/images/employees'.$employee->id. '/'. $fileNameToStore;
 
             $employee->save();
 

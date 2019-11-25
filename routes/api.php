@@ -33,6 +33,11 @@ Route::group(['prefix' => 'patient'], function () {
     Route::get('/prescriptions', 'PatientsController@prescriptions');
     Route::get('/prescription/{prescription}', 'PatientsController@prescription');
     Route::put('/prescription/{prescription}/submit','PatientsController@submitPrescription');
+
+    Route::post('/{user}/doctor/message', 'MessagesController@patient_doctor');
+
+    Route::get('/{user}/doctor/message', 'MessagesController@getPatientDoctorChat');
+
     Route::get('/pay/{prescription}','PaymentController@pay');
     Route::get('/check-payment-status/{prescription}','PaymentController@checkPaymentStatus');
     Route::post('create', 'PasswordResetController@create');
@@ -43,8 +48,26 @@ Route::group(['prefix' => 'patient'], function () {
 
 Route::get('/doctors','PatientsController@list_all_doctors');
 
+Route::post('/{staffAttendance}/checkin', 'StaffAttendanceController@checkin');
+
+Route::post('/{staffAttendance}/checkout', 'StaffAttendanceController@checkout');
+
+Route::get('department/{department}/message', 'MessagesController@getDepartmentChat');
+
+Route::post('department/{department}/message', 'MessagesController@storeDepartmentChat');
+
+Route::get('/{conversation}/conversation', 'MessagesController@chatWith');
+
+Route::get('/message-attachment/{message}/download', 'MessagesController@download');
+
+
 
 Route::group(['prefix' => 'doctor'], function () {
+
+    Route::get('/', function(){
+
+        return auth()->guard('doctor')->user();
+    })->middleware(['multiauth:doctor,api']);
 
     Route::post('/register', 'DoctorsControllers\Auth\RegisterController@register');
     Route::get('/appointment-list', 'DoctorsController@list_appointment');
@@ -55,10 +78,24 @@ Route::group(['prefix' => 'doctor'], function () {
     Route::get('/{user}/get-record','DoctorsController@get_patient_record');
 
 
+    Route::get('/{doctor}/request-code', 'StaffAttendanceController@requestCodeForDoctor');
+
+    Route::post('{doctor}/message', 'MessagesController@doctorChat');
+
+    Route::get('/{doctor}/chats', 'MessagesController@getdoctorChats'); #return list of other doctors a doctor chats with
+
+    Route::post('/{doctor}/patient/message', 'MessagesController@doctor_patient');
+
+    Route::get('/{doctor}/patient/message', 'MessagesController@getDoctorPatientChat');
 
 });
 
 Route::group(['prefix' => 'admin'], function () {
+
+    Route::get('/', function(){
+
+        return auth()->guard('admin')->user();
+    })->middleware(['multiauth:admin,api']);
 
     Route::get('/department/{department}/staff-list', 'AdminsControllers\DepartmentsController@staffList');
 
@@ -74,6 +111,12 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/staff/list', 'AdminsControllers\StaffsController@index'); #list of all staff
 
+    Route::post('register/pharmacist', 'AdminsControllers\PharmacistsController@register');
+
+    Route::patch('pharmacist/{pharmacist}/edit', 'AdminsControllers\PharmacistsController@update');
+
+    Route::delete('/delete/{id}/pharmacist', 'AdminsControllers\PharmacistsController@destroy');
+
     Route::patch('/department/{department}/assign-head', 'AdminsControllers\DepartmentsController@assignHead');
 
     Route::get('/doctors-registration-requirement', 'DoctorsControllers\Auth\RegistrationRequirement@getRequirement');
@@ -85,6 +128,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::patch('/edit/{employee}/staff', 'AdminsControllers\StaffsController@update');
 
     Route::delete('/delete/{employee}/staff', 'AdminsControllers\StaffsController@destroy');
+
+    Route::get('/{admin}/request-code', 'StaffAttendanceController@requestCodeForAdmin');
     
 }); 
 
@@ -103,14 +148,24 @@ Route::group(['prefix' => 'staff'], function () {
 
     Route::post('/{employee}/reset-password', 'EmployeesControllers\StaffController@resetDefaultPassword');
 
-    Route::get('/{employee}/request-code', 'StaffAttendanceController@requestCode');
+    Route::get('/{employee}/request-code', 'StaffAttendanceController@requestCodeForStaff');
 
-    Route::post('/{staffAttendance}/checkin', 'StaffAttendanceController@checkin');
+    Route::post('/{employee}/message', 'MessagesController@staffChat');
 
-    Route::post('/{staffAttendance}/checkout', 'StaffAttendanceController@checkout');
+    Route::get('/{employee}/message', 'MessagesController@getStaffChat');
 
 });
 
+
+Route::group(['prefix' => 'pharmacist'], function () {
+
+    Route::post('/{pharmacist}/reset-password', 'EmployeesControllers\StaffController@resetDefaultPassword');
+
+    Route::get('/{pharmacist}/request-code', 'StaffAttendanceController@requestCodeForPharmacist');
+
+    Route::post('/{pharmacist}/message', 'MessagesController@pharmacistChat');
+
+});
 Route::group(['prefix' => 'payment'], function () {
     Route::get('/callback/{status}/{transac_id}/{cust_ref}/{pay_token}','PaymentController@callback');
 });

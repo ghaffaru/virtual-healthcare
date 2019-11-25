@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
+use App\Doctor;
+use App\Admin;
+use App\Pharmacist;
 use App\StaffAttendance;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use App\Employee;
 
 class StaffAttendanceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('api');
+        $this->middleware(['api']);
     }
 
-    public function requestCode(Employee $employee)
+    public function requestCode($employeeType)
     {
+        $logs = $employeeType->attendanceLogs()->create(['qrcode' => str_random(5)]);
         
-        $logs = $employee->attendanceLogs()->create(['qrcode' => str_random(5)]);
-
         $path = 'images/'.now().'qrcode.png';
 
         #generate qrcode
@@ -35,6 +37,26 @@ class StaffAttendanceController extends Controller
 
     }
 
+    public function requestCodeForDoctor(Doctor $doctor)
+    {
+        return $this->requestCode($doctor);
+    }
+
+    public function requestCodeForPharmacist(Pharmacist $pharmacist)
+    {
+        return $this->requestCode($pharmacist);
+    }
+
+    public function requestCodeForAdmin(Admin $admin)
+    {
+        return $this->requestCode($admin);
+    }
+
+    public function requestCodeForStaff(Employee $employee)
+    {
+        return $this->requestCode($employee);
+    }
+
     public function checkin(StaffAttendance $staffAttendance)
     {
         if($staffAttendance)
@@ -43,7 +65,7 @@ class StaffAttendanceController extends Controller
             {
                 $staffAttendance->update(['checkin' => now()]);
 
-                return response()->json(['success' => 'You are checked'], 200);
+                return response()->json(['success' => 'You checked in'], 200);
             
             }else{
 
@@ -57,7 +79,7 @@ class StaffAttendanceController extends Controller
 
     public function checkout(staffAttendance $staffAttendance)
     {
-        $staffAttendance->update(['checkin' => now()]);
+        $staffAttendance->update(['checkout' => now()]);
 
         return response()->json(['success' => 'You checked out'], 200);
     }
