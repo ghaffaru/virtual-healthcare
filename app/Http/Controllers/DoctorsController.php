@@ -23,14 +23,13 @@ class DoctorsController extends Controller
     // List appointment
     public function list_appointment(){
         
-    
-        
         // $approved = $doctor->appointments->where('approved', true);
 
         // $unapproved = $doctor->appointments->where('approved', false);
 
         // $appointment = $doctor->appointments;
         $doctor = auth()->guard('doctor')->user()->id;
+
         $appointments = Appointment::where([
             'doctor_id' => $doctor,
         ])->get();
@@ -58,7 +57,6 @@ class DoctorsController extends Controller
             return response()->json([
                 'message' => 'Appointment approved',
                 'res' => 'approved'
-
             ]);
 
     }
@@ -79,13 +77,18 @@ class DoctorsController extends Controller
     }
 
     //Write Patient Record
-    public function write_patient_record(WritePatientRecordRequest $request){
+    public function write_patient_record(WritePatientRecordRequest $request)
+    {
         $get_record = PatientRecord::create([
             'user_id' => $request->user_id,
             'prescription_id' => $request->prescription_id,
             'report_type' => $request->report_type,
             'description' => $request->description,
         ]);
+
+        return response()->json(
+            $get_record
+        );
     }
 
     //Get Patient Record 
@@ -101,7 +104,8 @@ class DoctorsController extends Controller
             } else {
      
                  return response()->json([
-                     'message' => 'No Record found'
+                     'message' => 'No Record found',
+                     'res' => 'found'
                  ]);
             }
     }

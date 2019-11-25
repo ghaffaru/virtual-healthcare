@@ -13,7 +13,7 @@ class WritePatientRecordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,9 @@ class WritePatientRecordRequest extends FormRequest
     {
         return [
             //
+            'user_id' => ['required'],
+            'report_type' => ['required'],
+            'description' => ['required']
         ];
     }
 }

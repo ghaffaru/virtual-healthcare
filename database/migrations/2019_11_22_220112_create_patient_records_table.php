@@ -18,7 +18,7 @@ class CreatePatientRecordsTable extends Migration
             $table->integer('user_id');
             $table->integer('prescription_id');
             $table->string('report_type');
-            $table->string('decription');
+            $table->string('description');
             $table->timestamps();
         });
     }

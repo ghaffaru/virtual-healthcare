@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Ambulance;
 use App\Http\Resources\PrescriptionResource;
+use App\PatientRecord;
 use App\Prescription;
 use Hash;
 use Illuminate\Support\Carbon;
@@ -25,7 +26,8 @@ class PatientsController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api')
-             ->only(['book_appointment','appointments','cancel_appointment','prescriptions','submitPrescription']);
+             ->only(['book_appointment','appointments','cancel_appointment',
+                    'prescriptions','submitPrescription','getRecords']);
     }
 
     public function store(CreatePatientRequest $request)
@@ -155,6 +157,14 @@ class PatientsController extends Controller
         $prescription->save();
 
         return new PrescriptionResource($prescription);
+    }
+
+    public function getRecords()
+    {
+        $records = PatientRecord::where(['user_id' => auth()->guard('api')->user()->id])->get();
+
+        return response()->json($records);
+
     }
 
 }
