@@ -12,10 +12,19 @@ class Admin extends Authenticatable
 {
     use Notifiable, HasMultiAuthApiTokens;
 
+    protected $guard = 'admin';
+
     protected $guarded = ['id'];
 
     
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+
+    public function attendanceLogs()
+    {
+        return $this->hasMany('App\StaffAttendance');
+    }
 }
