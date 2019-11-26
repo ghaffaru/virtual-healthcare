@@ -39,7 +39,7 @@ class StaffManagementFormRequest extends FormRequest
 
             'designation' => 'nullable|string',
 
-            'avatar' => 'required|image|mimes:png,jpg,jpeg',
+            'avatar' => 'nullable',
 
             'gender' => 'required|string|min:1|max:1', # f or M
 
