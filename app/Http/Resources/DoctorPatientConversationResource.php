@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use App\Message;
 use App\Doctor;
-
+use App\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class DoctorPatientConversationResource extends JsonResource
@@ -31,7 +31,7 @@ class DoctorPatientConversationResource extends JsonResource
     {   
         if($this->user1_id == $this->user2_id) #auth->id = user1_id = user2_id
         {
-            $patient = User::find($this->user2_id);  #use any of the ids to return the patient
+            $doctor = User::find($this->user2_id);  #use any of the ids to return the patient
 
         }elseif($this->user1_id == auth()->guard('api')->user()->id)
         {
@@ -44,7 +44,7 @@ class DoctorPatientConversationResource extends JsonResource
             
         return [
                 
-            'id' => $patient['id'],
+            'id' => $doctor['id'],
             
             'name' => $doctor['name'],
 

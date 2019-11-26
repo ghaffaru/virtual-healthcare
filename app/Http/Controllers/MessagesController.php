@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Appointment;
 use App\Doctor;
 use App\User;
 use App\Message;
@@ -20,6 +21,7 @@ use App\Http\Resources\DoctorPatientConversationResource;
 use App\Http\Resources\PatientDoctorConversationResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MessagesController extends Controller
 {
@@ -54,13 +56,28 @@ class MessagesController extends Controller
     public function doctor_patient(MessagesRequest $request, Doctor $doctor) 
     {
         #from doctor
+        // return 'i am here';
         $this->store($doctor, 'doctor_patientschat');
 
     }
 
-    public function patient_doctor(MessagesRequest $request, User $user) 
+    public function patient_doctor(MessagesRequest $request) 
     {
-        $this->store($user, 'doctor_patientschat');
+        $appointment = Appointment::where([
+            'user_id' => auth()->guard('api')->id(),
+            'approved' => true,
+            'doctor_id' => $request->id,
+            ['appointment_date', '>=', now()]
+        ])->get();
+
+        if ($appointment->count() > 0) {
+            $this->store(auth()->guard('api')->user(), 'doctor_patientschat');
+        }else {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
 
     }
     #end of storing by type
@@ -90,8 +107,9 @@ class MessagesController extends Controller
         return $this->getConversations('pharmacistschat', 'pharmacist');
     }
 
-    public function getDoctorPatientChat(Doctor $doctor)
+    public function getDoctorPatientChat()
     {
+        // return auth()->guard('doctor')->user();
 
         return $this->getConversations('doctor_patientschat', 'doctor');
     }
@@ -172,7 +190,7 @@ class MessagesController extends Controller
         #store message and attachment
         $message = $conversation->addMessage($message);
 
-        return response()->json(['message' => nl2br(request()->message)]);
+        return response()->json(['message' => $message]);
         
     }
 

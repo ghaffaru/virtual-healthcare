@@ -34,9 +34,8 @@ Route::group(['prefix' => 'patient'], function () {
     Route::get('/prescription/{prescription}', 'PatientsController@prescription');
     Route::put('/prescription/{prescription}/submit','PatientsController@submitPrescription');
 
-    Route::post('/{user}/doctor/message', 'MessagesController@patient_doctor');
-
-    Route::get('/{user}/doctor/message', 'MessagesController@getPatientDoctorChat');
+    Route::post('/doctor/message', 'MessagesController@patient_doctor');
+    Route::get('/doctor/message', 'MessagesController@getPatientDoctorChat');
 
     Route::get('/pay/{prescription}','PaymentController@pay');
     Route::get('/check-payment-status/{prescription}','PaymentController@checkPaymentStatus');
@@ -86,7 +85,7 @@ Route::group(['prefix' => 'doctor'], function () {
 
     Route::post('/{doctor}/patient/message', 'MessagesController@doctor_patient');
 
-    Route::get('/{doctor}/patient/message', 'MessagesController@getDoctorPatientChat');
+    Route::get('/patient/message', 'MessagesController@getDoctorPatientChat');
 
 });
 

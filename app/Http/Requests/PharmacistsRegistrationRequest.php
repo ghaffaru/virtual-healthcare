@@ -28,7 +28,7 @@ class PharmacistsRegistrationRequest extends FormRequest
             'email' => 'required|email|unique:pharmacists',
             'department_id' => 'required|integer',
             'phone' => 'required|string|unique:pharmacists|min:10',
-            'avatar' => 'required|image|mimes:png,jpg,jpeg'
+            'avatar' => 'nullable|image|mimes:png,jpg,jpeg'
         ];
     }
 }
