@@ -14,7 +14,7 @@ class PharmacistsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['api']);
+        $this->middleware(['api', \Barryvdh\Cors\HandleCors::class]);
     }
 
     /**
