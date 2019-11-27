@@ -92,7 +92,7 @@ Route::group(['prefix' => 'doctor'], function () {
 Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/', function(){
-
+  
         return auth()->guard('admin')->user();
     })->middleware(['multiauth:admin,api']);
 
