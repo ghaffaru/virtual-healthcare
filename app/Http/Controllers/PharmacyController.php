@@ -25,7 +25,11 @@ class PharmacyController extends Controller
     }
     public function addDrug(AddDrugRequest $request) 
     {
-            $drug = Pharmacy::create($request->all());
+            $drug = Pharmacy::create([
+               'drug_name' => $request->drug_name,
+               'quantity' => $request->quantity,
+               'price' => $request->price
+            ]);
 
             return response()->json([
                 'drug' => $drug

@@ -25,8 +25,8 @@ class AddDrugRequest extends FormRequest
     {
         return [
             //
-            'drug_name' => ['required','unique:pharmacists'],
-            'quantity' => ['required','integer'],
+            'drug_name' => ['required'],
+            'quantity' => ['required'],
             'price' => ['required']
         ];
     }
