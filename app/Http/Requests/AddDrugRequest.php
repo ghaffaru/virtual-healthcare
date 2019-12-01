@@ -27,7 +27,7 @@ class AddDrugRequest extends FormRequest
             //
             'drug_name' => ['required','unique:pharmacists'],
             'quantity' => ['required','integer'],
-            'price' => ['required','double']
+            'price' => ['required']
         ];
     }
 }

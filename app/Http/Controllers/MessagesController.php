@@ -137,6 +137,8 @@ class MessagesController extends Controller
             'message' => nl2br(request()->message),
 
             'attachment' => $this->storeFile($conversation) ?? null
+
+            
         
         ];
         
@@ -184,8 +186,9 @@ class MessagesController extends Controller
 
             'message' => request()->message,
 
-            'attachment' => $this->storeFile($conversation) ?? null #if no file attachment set field to null
-        
+            'attachment' => $this->storeFile($conversation) ?? null, #if no file attachment set field to null
+            
+            'owner' => request()->owner
         ];
         #store message and attachment
         $message = $conversation->addMessage($message);

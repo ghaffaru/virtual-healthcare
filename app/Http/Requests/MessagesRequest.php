@@ -27,6 +27,7 @@ class MessagesRequest extends FormRequest
             'message' => 'nullable|string',
             'attachment' => 'nullable|file|mimes:pdf,docx,xlsx',
             'id' => 'required|integer' #recipient_id 
+            
         ];
     }
 }

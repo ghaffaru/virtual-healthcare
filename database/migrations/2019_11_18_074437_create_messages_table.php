@@ -18,6 +18,7 @@ class CreateMessagesTable extends Migration
             $table->integer('conversation_id')->unsigned();
             $table->integer('sender_id')->unsigned()->nullable();
             $table->integer('recipient_id')->unsigned()->nullable();
+            $table->string('owner')->unsigned()->nullable();
             $table->string('message')->nullable();
             $table->string('attachment')->nullable();
             $table->timestamps();

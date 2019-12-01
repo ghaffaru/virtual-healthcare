@@ -18,7 +18,7 @@ class AddDepartmentIdColumn extends Migration
             $table->integer('department_id');
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *
