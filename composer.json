@@ -15,6 +15,7 @@
         "laravel/passport": "^7.5",
         "laravel/tinker": "^1.0",
         "nesbot/carbon": "^2.27",
+        "pusher/pusher-php-server": "~4.0",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "smartins/passport-multiauth": "^4.1",
         "spatie/flysystem-dropbox": "^1.2"

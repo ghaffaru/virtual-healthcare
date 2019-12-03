@@ -93,7 +93,9 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/', function(){
   
+
         return auth()->guard('admin')->user();
+        
     })->middleware(['multiauth:admin,api']);
 
     Route::get('/department/{department}/staff-list', 'AdminsControllers\DepartmentsController@staffList');

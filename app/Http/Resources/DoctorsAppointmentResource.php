@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class DoctorsAppointmentResource extends JsonResource
@@ -14,6 +15,11 @@ class DoctorsAppointmentResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $user = User::find($this->user_id); 
+        return [
+            'patient_name' => $user->name,
+            'appointment_date' => $this->appointment_date,
+            'approved' => $this->approved
+        ];
     }
 }
