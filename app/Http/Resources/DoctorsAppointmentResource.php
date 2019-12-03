@@ -17,6 +17,7 @@ class DoctorsAppointmentResource extends JsonResource
     {
         $user = User::find($this->user_id); 
         return [
+            'id' => $this->id,
             'patient_name' => $user->name,
             'appointment_date' => $this->appointment_date,
             'approved' => $this->approved
