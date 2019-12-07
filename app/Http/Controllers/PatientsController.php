@@ -12,6 +12,9 @@ use App\Http\Resources\Doctor as DoctorResource;
 use Illuminate\Http\Request;
 use App\User;
 use App\Ambulance;
+use App\Chat;
+use App\Events\MessageReceived;
+use App\Http\Resources\ChatsResource;
 use App\Http\Resources\PrescriptionResource;
 use App\PatientRecord;
 use App\Prescription;
@@ -53,7 +56,7 @@ class PatientsController extends Controller
 
     public function list_all_doctors() 
     {
-        return DoctorResource::collection(Doctor::all()); 
+        return DoctorResource::collection(Doctor::all()->sortByDesc('created_at')); 
     }
 
     public function book_appointment(BookAppointmentRequest $request) 
@@ -167,4 +170,32 @@ class PatientsController extends Controller
 
     }
 
+    public function chatWithDoctor(Request $request)
+    {
+        
+        $this->validate($request, [
+            'doctor_id' => 'required',
+            'sender' => 'required'
+        ]);
+
+        $chat = Chat::create([
+            'user_id' => auth()->guard('api')->id(),
+            'doctor_id' => $request->doctor_id,
+            'message' => $request->message,
+            'sender' => $request->sender
+        ]);
+
+        event(new MessageReceived($chat));
+        
+    }
+        
+    public function getChatsWithDoctor(Doctor $doctor)
+    {
+        $chats = Chat::where([
+            'user_id' => auth()->guard('api')->id(),
+            'doctor_id' => $doctor->id
+        ])->get();
+    
+        return ChatsResource::collection($chats);
+    }
 }
