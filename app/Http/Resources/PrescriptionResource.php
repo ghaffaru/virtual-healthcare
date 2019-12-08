@@ -21,7 +21,8 @@ class PrescriptionResource extends JsonResource
             'medication' => $this->medication,
             'submitted' => $this->submitted,
             'drug_issued' => $this->drug_issued,
-            'created_at' => $this->created_at
+            'created_at' => $this->created_at,
+            'file' => url('/prescriptions/' . $this->user_id . 'prescription' . $this->id . '.pdf')
         ];
     }
 }

@@ -23,6 +23,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/getPatient/{user}', 'PatientsController@getPatient');
+
 Route::group(['prefix' => 'patient'], function () {
 
     Route::post('/register','PatientsController@store');
@@ -88,6 +90,10 @@ Route::group(['prefix' => 'doctor'], function () {
     Route::post('/{doctor}/patient/message', 'MessagesController@doctor_patient');
 
     Route::get('/patient/message', 'MessagesController@getDoctorPatientChat');
+
+    Route::get('/patients','DoctorsController@getDoctorsPatients');
+
+    Route::post('/patient/chat','DoctorsController@chatWithPatient');
 
 });
 

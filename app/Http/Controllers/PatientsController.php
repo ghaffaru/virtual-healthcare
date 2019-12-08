@@ -16,6 +16,7 @@ use App\Chat;
 use App\Events\MessageReceived;
 use App\Http\Resources\ChatsResource;
 use App\Http\Resources\PrescriptionResource;
+use App\Http\Resources\UserResource;
 use App\PatientRecord;
 use App\Prescription;
 use Hash;
@@ -142,7 +143,9 @@ class PatientsController extends Controller
             'user_id' => auth()->guard('api')->id(),
         ])->get();
         
-        return PrescriptionResource::collection($prescriptions);
+        return PrescriptionResource::collection(
+            $prescriptions
+        );
         
     }
 
@@ -197,5 +200,10 @@ class PatientsController extends Controller
         ])->get();
     
         return ChatsResource::collection($chats);
+    }
+
+    public function getPatient(User $user)
+    {
+        return new UserResource($user);
     }
 }
