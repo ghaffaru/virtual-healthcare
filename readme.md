@@ -1,4 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="54" height="20"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="54" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path fill="#555" d="M0 0h37v20H0z"/><path fill="#97ca00" d="M37 0h17v20H37z"/><path fill="url(#b)" d="M0 0h54v20H0z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="110"> <text x="195" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="270">stars</text><text x="195" y="140" transform="scale(.1)" textLength="270">stars</text><text x="445" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="70">4</text><text x="445" y="140" transform="scale(.1)" textLength="70">4</text></g> </svg>
+# Virtual Healthcare
+The backend api for a virtual healthcare platform 
 
-#Virtual Healthcare
+## Installation
+
+Use [composer](https://getcomposer.org/) to set it up
+
+```
+composer install
+
+```
+### Features
+
+- Patient, doctor, and pharmacist registeration
+- Patient can book an appointment with a doctor
+- Patient can chat with doctor directly
+- Doctor can prescribe drugs with a digital signature
+- Patient can download prescription and submit to pharmacist
+- Patient can pay for drugs on the app and get it delivered at home.
+
+### Built with :heart: using
+- PHP with Laravel Framework
+- SQLite database for development
+- Postgres database in production
+- Heroku as cloud platform
+- Slydepay payment api
 
